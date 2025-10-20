@@ -120,6 +120,32 @@ a.inline-block.leading-5.pl-16 {
   @apply text-base font-bold dark:text-white text-blacktext mt-6 mb-4;
 }
 
+/* Reveal clickable heading '#' anchors on hover */
+.markdown :is(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 6rem; /* avoid being hidden under sticky header */
+}
+
+.markdown :is(h1, h2, h3, h4, h5, h6) .heading-anchor {
+  margin-left: 0.5rem;
+  opacity: 0;
+  text-decoration: none;
+  color: var(--color-mint-500);
+  transition: opacity 150ms ease;
+}
+
+.dark .markdown :is(h1, h2, h3, h4, h5, h6) .heading-anchor {
+  color: var(--color-riptide-300);
+}
+
+.markdown :is(h1, h2, h3, h4, h5, h6):hover .heading-anchor,
+.markdown :is(h1, h2, h3, h4, h5, h6) .heading-anchor:focus-visible {
+  opacity: 1;
+}
+
+.markdown .anchor-hash {
+  font-weight: 600;
+}
+
 .markdown p {
   @apply tracking-normal font-montserrat text-pretty text-xl max-md:text-lg text-blacktext dark:text-gray-200 mb-8 leading-8;
 }

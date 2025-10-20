@@ -5,6 +5,8 @@ import preact from "@astrojs/preact";
 import sitemap from "@astrojs/sitemap"
 import icon from "astro-icon";
 import remarkCardlink from "./src/utils/remark-cardlink.mjs";
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 // https://astro.build/config
 export default defineConfig({
@@ -23,5 +25,21 @@ export default defineConfig({
       theme: 'github-dark'
     },
     remarkPlugins: [remarkCardlink],
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: 'append',
+          properties: { class: 'heading-anchor', ariaHidden: 'true' },
+          content: {
+            type: 'element',
+            tagName: 'span',
+            properties: { class: 'anchor-hash' },
+            children: [{ type: 'text', value: '#' }]
+          }
+        }
+      ]
+    ],
   },
 });

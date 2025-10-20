@@ -42,9 +42,9 @@ const { title } = Astro.props;
     });
 
     // Root UL is the existing tocList. We'll create nested ULs for each level.
-    const rootUl = tocList;
-    let h3Ul: HTMLUListElement | null = null; // current UL container for H3 items under the latest H2
-    let h4Ul: HTMLUListElement | null = null; // current UL container for H4 items under the latest H3
+  const rootUl = tocList;
+  /** @type {HTMLUListElement} */ let h3Ul = rootUl; // current UL container for H3 items under the latest H2
+  /** @type {HTMLUListElement} */ let h4Ul = rootUl; // current UL container for H4 items under the latest H3
 
   headers.forEach((header, index) => {
       if (!header.id) {
@@ -54,7 +54,9 @@ const { title } = Astro.props;
 
       const link = document.createElement("a");
       link.href = `#${header.id}`;
-      link.textContent = header.textContent?.trim() || header.id;
+      // Derive text and strip a trailing '#' injected by heading anchors
+      const rawText = (header.textContent || '').trim();
+      link.textContent = rawText.replace(/\s*#\s*$/, '') || header.id;
 
       // Base link classes
       link.classList.add(
@@ -79,7 +81,6 @@ const { title } = Astro.props;
       // Build structure depending on level
       if (level === 2) {
         // New H2: reset lower levels, create a UL for its H3 children
-        h4Ul = null;
         h3Ul = document.createElement("ul");
         h3Ul.classList.add("border-neutral-400", "dark:hover:border-white", "hover:border-blacktext", "pl-0");
         console.log("classes removed 3");
@@ -88,6 +89,8 @@ const { title } = Astro.props;
         h2Li.appendChild(link);
         h2Li.appendChild(h3Ul);
         rootUl.appendChild(h2Li);
+        // H4 items will attach under the latest H3 UL when available
+        h4Ul = h3Ul;
       } else if (level === 3) {
         // New H3: create a UL for its H4 children
         h4Ul = document.createElement("ul");
@@ -96,7 +99,7 @@ const { title } = Astro.props;
         const h3Li = document.createElement("li");
         h3Li.appendChild(link);
         h3Li.appendChild(h4Ul);
-        (h3Ul || rootUl).appendChild(h3Li);
+        h3Ul.appendChild(h3Li);
       } else {
         // H4: append as leaf into current H4 UL if present, else fall back
         const li = document.createElement("li");

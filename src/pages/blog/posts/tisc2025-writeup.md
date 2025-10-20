@@ -18,6 +18,16 @@ This is my technical writeup on The InfoSecurity Challenge (TISC) 2025 Capture t
 
 I included my own thought process and failed attempts throughout the writeups.
 
+Here are all of the Levels that I completed:
+1. [LEVEL 1 - Target Reference Point 🛰️ GEOINT](#level-1---target-reference-point-%EF%B8%8F-geoint)
+2. [LEVEL 2 - The Spectrecular Bot](##level-2---the-spectrecular-bot)
+3. [LEVEL 3 - Rotary Precision](#level-3---rotary-precision)
+4. [LEVEL 4 - Spectre Memory](#level-4---spectre-memory)
+5. [LEVEL 5 - SYNTRA](#level-5---syntra)
+6. [LEVEL 6 - Passkey](#level-6---passkey)
+7. [LEVEL 7A - Santa ClAWS](#level-7a---santa-claws)
+8. [LEVEL 8A - VirusVault](#level-8a---virusvault)
+
 ---
 
 ## LEVEL 1 - Target Reference Point 🛰️ GEOINT
@@ -536,7 +546,7 @@ setVolumeIndex(index) {
 
 When the `Play` and `Pause` buttons are pressed, it executes the function `uploadQueueAndPlay()`. This function builds a packet that is sent to the server to retrieve an MP3 blob. This MP3 blob is then set as the main music source to play.
 
-And given the [Flag Location](#Flag-Location) analysis, we can conclude that the flag is obtained through the endpoint `/?t=${ts}` with a constructed packet.
+And given the [Flag Location](#flag-location) analysis, we can conclude that the flag is obtained through the endpoint `/?t=${ts}` with a constructed packet.
 ```js
 async uploadQueueAndPlay() {
   if (!this.isConnected) return;
@@ -696,7 +706,7 @@ Now let's dive deeper into `main_evaluateMetricsQuality()` and find the conditio
 .text:000000000073E8C7 mov     rdx, [rcx+18h]
 ```
 
-This function contains a call for `main_computeMetricsBaseline()` with the `_r0.array` as the argument. This array contains Action Records. These action records match the same as the construction of the payload from [[LEVEL 5 - SYNTRA#Checking out the Frontend]] analysis.
+This function contains a call for `main_computeMetricsBaseline()` with the `_r0.array` as the argument. This array contains Action Records. These action records match the same as the construction of the payload from [Checking out the Frontend](#checking-out-the-frontend) analysis.
 ```c
 struct main_ActionRecord_0 // sizeof=0xC
 {
@@ -737,7 +747,7 @@ calibration = [
 ]
 ```
 
-Next up the `main_correctionFactors` is also used within the function for some calculations. I previously found the location of the values in [[LEVEL 5 - SYNTRA#Flag Location]].
+Next up the `main_correctionFactors` is also used within the function for some calculations. I previously found the location of the values in [Flag Location](#flag-location).
 
 #### Payload Creation & Sending
 
@@ -1859,7 +1869,7 @@ class Virus
 
 We can combine both the multi-byte encoding (`%ff`) and the null bytes (`%00`) to create and control the other fields.
 
-In this case we want to control `$species` since the `printInfo()` allows us to perform LFI (Local File Inclusion) exploits (or at least that was what I thought, see [[LEVEL 8A - VirusVault#Reading from ENV (Environment Variables)]].
+In this case we want to control `$species` since the `printInfo()` allows us to perform LFI (Local File Inclusion) exploits (or at least that was what I thought, see [Reading from ENV (Environment Variables)](#reading-from-env-environment-variables).
 
 #### Exploiting Serialization with Multi/Null Bytes
 

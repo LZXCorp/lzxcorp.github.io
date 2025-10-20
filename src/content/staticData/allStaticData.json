@@ -26,7 +26,7 @@
   "pageTitle": "LZX Blog",
   "pageDescription": "Blog and portfolio of LZX. Template customized by LZX.",
   "OGImage": {
-    "url": "/images/imagedefault.webp",
-    "alt": "Screenshot of a web portfolio with a modern and dark design. Featuring Fernando López, a Frontend Developer with 8 years of experience, highlighting his passion for development and technology. Includes contact sections, projects, and a technology stack with technologies like HTML5, JavaScript, TypeScript, Angular, Node.js, CSS, Tailwind, and more."
+    "url": "/images/lzx_banner.png",
+    "alt": "Banner image for LZX Blog"
   }
 }
