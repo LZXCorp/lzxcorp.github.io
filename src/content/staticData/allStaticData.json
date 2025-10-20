@@ -1,0 +1,32 @@
+{
+  "profileImage": "/images/lzx.png",
+  "profileAlt": "Photo of Zhen Xiang",
+  "profileLink": "https://www.linkedin.com/in/lzx-cyber/",
+  "profileTitle": "Cybersecurity Enthusiast & Developer",
+  "profileName": "Leow Zhen Xiang",
+  "github": "https://github.com/LZXCorp",
+  "githubText": "GitHub",
+  "portfolioImage": "/images/portfolio.webp",
+  "linkedin": "https://www.linkedin.com/in/lzx-cyber/",
+  "alias": "LZX Corp",
+  "contactSectionTitle": "Ready to take your idea to the next level?",
+  "contactSectionSubtitle": "Let's work together.",
+  "contactSectionButtonText": "Contact Me",
+  "contactSectionButtonIcon": "paperplane",
+  "techsTitle": "TECHS",
+  "githubIconName": "github",
+  "linkedinIconName": "linkedin",
+  "hobbies": [
+    "Cybersecurity",
+    "Experimentation",
+    "Sci-Fi Games",
+    "Backrooms Hunting",
+    "Coke"
+  ],
+  "pageTitle": "LZX Blog",
+  "pageDescription": "Blog and portfolio of LZX. Template customized by LZX.",
+  "OGImage": {
+    "url": "/images/imagedefault.webp",
+    "alt": "Screenshot of a web portfolio with a modern and dark design. Featuring Fernando López, a Frontend Developer with 8 years of experience, highlighting his passion for development and technology. Includes contact sections, projects, and a technology stack with technologies like HTML5, JavaScript, TypeScript, Angular, Node.js, CSS, Tailwind, and more."
+  }
+}

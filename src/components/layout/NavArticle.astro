@@ -1,0 +1,138 @@
+---
+const { title } = Astro.props;
+---
+
+<div class="max-xl:hidden  ">
+  <div id="nav-content" class="bg-white dark:bg-transparent sticky w-72 mt-8 rounded-2xl dark:border-0 border border-neutral-100 top-14 max-h-[calc(100svh-3.5rem)] overflow-x-hidden px-6 pt-8 pb-12">
+    <div class="flex flex-col gap-4 pl-0">
+      <div>
+        <h3 class="dark:text-zinc-400 text-blacktext/90 font-black tracking-wide text-md uppercase">Table of Contents</h3>
+      </div>
+      <div class="flex flex-col gap-2 pr-6 text-neutral-500 dark:text-neutral-300 ">
+        <ul id="toc-list" class="leading-loose text-base gap-2 border-l dark:border-neutral-500/20 border-blacktext/20">
+          <li class="leading-loose">
+            <a class="inline-block leading-5 pl-4 font-bold text-white border-l dark:border-white border-blacktext dark:hover:border-white hover:border-blacktext" href="#">{title}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tocList = document.getElementById("toc-list");
+    const content = document.getElementById("content");
+
+    if (!tocList || !content) return;
+
+    // Include H2, H3 and H4 in the TOC
+    // Proactively mark headings inside containers to skip
+    content.querySelectorAll('.no-toc h2, .no-toc h3, .no-toc h4, .cardlink h2, .cardlink h3, .cardlink h4, [data-no-toc] h2, [data-no-toc] h3, [data-no-toc] h4').forEach((el) => {
+      el.setAttribute('data-skip-toc', '1');
+    });
+
+    // Select H2-H4 and filter out any that are inside no-toc/cardlink containers or explicitly marked to skip
+    const headers = Array.from(content.querySelectorAll("h2, h3, h4")).filter((h) => {
+      if (h.closest('.no-toc')) return false;
+      if (h.closest('.cardlink')) return false;
+      if (h.closest('[data-no-toc]')) return false;
+      if (h.getAttribute('data-skip-toc') === '1') return false;
+      return true;
+    });
+
+    // Root UL is the existing tocList. We'll create nested ULs for each level.
+    const rootUl = tocList;
+    let h3Ul: HTMLUListElement | null = null; // current UL container for H3 items under the latest H2
+    let h4Ul: HTMLUListElement | null = null; // current UL container for H4 items under the latest H3
+
+  headers.forEach((header, index) => {
+      if (!header.id) {
+        header.id = header.textContent?.trim().toLowerCase().replace(/\s+/g, "-") + "-" + index;
+        // 👈 Add the class
+      }
+
+      const link = document.createElement("a");
+      link.href = `#${header.id}`;
+      link.textContent = header.textContent?.trim() || header.id;
+
+      // Base link classes
+      link.classList.add(
+        "inline-block",
+        "leading-5",
+        "hover:text-mint-400",
+        "py-2",
+        "border-l",
+        "border-transparent",
+        "dark:hover:border-white",
+        "hover:border-blacktext"
+      );
+
+      const tag = header.tagName; // e.g., "H2", "H3", "H4"
+      const level = Number(tag.substring(1));
+
+      // Indentation per level
+      if (level === 2) link.classList.add("pl-6");
+      else if (level === 3) link.classList.add("pl-12");
+      else link.classList.add("pl-16"); // H4
+
+      // Build structure depending on level
+      if (level === 2) {
+        // New H2: reset lower levels, create a UL for its H3 children
+        h4Ul = null;
+        h3Ul = document.createElement("ul");
+        h3Ul.classList.add("border-neutral-400", "dark:hover:border-white", "hover:border-blacktext", "pl-0");
+        console.log("classes removed 3");
+
+        const h2Li = document.createElement("li");
+        h2Li.appendChild(link);
+        h2Li.appendChild(h3Ul);
+        rootUl.appendChild(h2Li);
+      } else if (level === 3) {
+        // New H3: create a UL for its H4 children
+        h4Ul = document.createElement("ul");
+        h4Ul.classList.add("border-neutral-400", "dark:hover:border-white", "hover:border-blacktext", "pl-0");
+
+        const h3Li = document.createElement("li");
+        h3Li.appendChild(link);
+        h3Li.appendChild(h4Ul);
+        (h3Ul || rootUl).appendChild(h3Li);
+      } else {
+        // H4: append as leaf into current H4 UL if present, else fall back
+        const li = document.createElement("li");
+        li.appendChild(link);
+        (h4Ul || h3Ul || rootUl).appendChild(li);
+      }
+
+      // Smooth scroll when clicking on a link
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById(header.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    // 👇 Detect the active header
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.getAttribute("id");
+          const link = document.querySelector(`a[href="#${id}"]`);
+
+          if (entry.isIntersecting) {
+            // Remove class from all and add only to the active one
+            document.querySelectorAll("#toc-list a").forEach((el) => {
+              el.classList.remove("font-semibold", "dark:text-mint-300!", "text-blacktext!", "dark:border-white!", "border-blacktext!"  );
+              el.classList.add("dark:text-neutral-300","text-neutral-500" );
+              console.log("classes removed 4");
+            });
+
+            link?.classList.add("font-semibold", "dark:text-mint-300!", "text-blacktext!",   "border-l", "dark:border-white!", "border-blacktext!");
+          }
+        });
+      },
+      { rootMargin: "-30% 0px -65% 0px", threshold: 0.1 } // Adjusted to improve visibility
+    );
+
+    headers.forEach((header) => observer.observe(header));
+  });
+</script>

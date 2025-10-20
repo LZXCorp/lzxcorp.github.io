@@ -1,0 +1,126 @@
+---
+import Heading from "../ui/Heading.astro";
+import Tag from "../ui/Tag.astro";
+import { Icon } from "astro-icon/components";
+
+
+// badgelink and obtained are optional if NOT obtained yet
+const CERTIFICATION = [
+  {
+    title: "Certified Penetration Testing Specialist",
+    issuer: "HackTheBox",
+    logo: "/images/logos/htb.svg",
+    badgeicon: "/images/cert/cpts.webp",
+    badgelink: "",
+    obtained: "",
+    accent: "rgb(169 67 251)",
+  },
+  {
+    title: "Certified Ethical Hacker",
+    issuer: "EC-Council",
+    logo: "/images/logos/eccouncil.png",
+    badgeicon: "/images/cert/ceh.png",
+    badgelink: "",
+    obtained: "12-2024",
+    accent: "rgb(237 6 2)",
+  },
+  {
+    title: "Certified Cloud Practitioner",
+    issuer: "Amazon Web Services (AWS)",
+    logo: "/images/logos/aws.svg",
+    badgeicon: "/images/cert/aws-clf.png",
+    badgelink: "https://www.credly.com/badges/5f9788c9-7233-44c7-bcd2-c7b44dccd075/public_url",
+    obtained: "10-2024",
+    accent: "rgb(255 153 0)",
+  }
+];
+---
+<section class="py-8 px-8 max-md:py-4 mb-4 scroll-m-16" id="certifications">
+  <div class="flex flex-col pt-8 max-w-6xl mx-auto">
+    <div class="flex gap-3 items-center justify-center">
+      <Icon class="text-3xl text-amber-400" name="award" />
+      <Heading text="Technical" textGradient="Certifications" level={2} />
+    </div>
+
+    <div class="mt-10" aria-label="Professional certifications">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+        {
+          CERTIFICATION.map((cert, index) => {
+            const CardTag = cert.badgelink ? 'a' : 'div';
+            return (
+              <li class="h-full">
+                <article role="article" aria-labelledby={`cert-title-${index}`} class="h-full">
+                  <CardTag
+                    {...(cert.badgelink ? { href: cert.badgelink, target: "_blank", rel: "noopener noreferrer", 'aria-label': `Open ${cert.title} badge` } : {})}
+                    class="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-black/30 dark:bg-white/5 p-6 ring-1 ring-black/10 dark:ring-white/10 transition hover:border-mint-400/40 hover:ring-mint-400/40 flex flex-col"
+                    style={`--accent: ${cert.accent || 'rgb(56 189 248)'}; --accent-blur: color-mix(in srgb, var(--accent) 40%, transparent);`}
+                  >
+                    {(!cert.obtained || (typeof cert.obtained === 'string' && cert.obtained.trim() === '')) && (
+                      <div class="pointer-events-none absolute inset-0 z-10">
+                        <span aria-hidden="true" class="absolute -right-8 top-3 block h-6 w-28 rotate-45 bg-red-500/90 dark:bg-red-500/90 shadow-lg"></span>
+                        <span class="sr-only">In progress</span>
+                      </div>
+                    )}
+                    {/* Decorative blurs using accent color; rotate >= 180deg around card center on hover (100ms) */}
+                    <span aria-hidden="true" class="pointer-events-none absolute inset-0 z-0 will-change-transform transition-transform duration-100 ease-out origin-center group-hover:rotate-[180deg] group-hover:scale-[1.06]">
+                      <span class="absolute -left-10 -top-10 size-48 rounded-full bg-[radial-gradient(circle_at_center,_var(--accent-blur),_transparent_60%)] opacity-80 blur-2xl"></span>
+                      <span class="absolute right-0 -bottom-12 size-56 rounded-full bg-[radial-gradient(circle_at_center,_var(--accent-blur),_transparent_60%)] opacity-80 blur-2xl"></span>
+                    </span>
+
+                    <div class="relative flex items-start justify-between gap-4 flex-1">
+                      <div class="flex min-w-0 flex-col">
+                        <h3 id={`cert-title-${index}`} class="text-base md:text-lg font-bold leading-snug" style="color: var(--accent)">
+                          {cert.title}
+                        </h3>
+                        <p class="text-xs font-medium text-zinc-700 dark:text-white/80">{cert.issuer}</p>
+                      </div>
+
+                      {cert.badgeicon && (
+                        <div class="relative shrink-0">
+                          <img
+                            src={cert.badgeicon}
+                            alt={`${cert.title} badge`}
+                            class="h-24 w-24 md:h-28 md:w-28 lg:h-32 lg:w-32 object-contain opacity-95 transition-transform duration-200 group-hover:scale-105"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          {cert.logo && (
+                            <img
+                              src={cert.logo}
+                              alt={`${cert.issuer} logo`}
+                              class="absolute -bottom-1 -right-1 h-6 w-6 md:h-7 md:w-7 text-amber-50 object-contain drop-shadow-md"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    <div class="relative mt-6 flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        {(!cert.obtained || (typeof cert.obtained === 'string' && cert.obtained.trim() === '')) && (
+                          <Tag tag="In Progress" forceDark={true} />
+                        )}
+                        <div class="text-sm text-zinc-400 dark:text-white/70">
+                          <time datetime={cert.obtained || 'TBD'}>
+                            {cert.obtained ? cert.obtained : '—'}
+                          </time>
+                        </div>
+                      </div>
+                      {cert.badgelink && (
+                        <span class="text-sm font-medium group-hover:underline" style="color: var(--accent)">View badge</span>
+                      )}
+                    </div>
+                  </CardTag>
+                </article>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+ 

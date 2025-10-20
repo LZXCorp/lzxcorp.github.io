@@ -1,0 +1,80 @@
+---
+import { Icon } from "astro-icon/components";
+
+const { tweetText, currentUrl } = Astro.props;
+
+const shareLinks = [
+  {
+    name: "WhatsApp",
+    icon: "whatsapp",
+    href: `https://api.whatsapp.com/send?text=${encodeURIComponent(`${currentUrl}`)}`,
+  },
+  {
+    name: "Discord",
+    icon: "discord",
+    href: `https://discord.com/channels/@me`,
+    copyUrl: `${currentUrl}`,
+  },
+  {
+    name: "Twitter",
+    icon: "twitter",
+    href: `https://twitter.com/intent/tweet?text=${tweetText}&url=${currentUrl}`,
+  },
+];
+---
+
+<div class="flex items-center gap-5 text-lg" role="group" aria-label="Share on social media">
+  <span class="text-base font-bold text-blacktext dark:text-white">Share </span>
+  {
+    shareLinks.map((link) => (
+      <a
+        href={link.href}
+        class="bg-blacktext rounded-full p-2"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Share on ${link.name}`}
+        title={`Share on ${link.name}`}
+        data-copy-url={link.copyUrl}
+        data-open={link.copyUrl ? link.href : undefined}
+      >
+        <Icon name={link.icon} />
+      </a>
+    ))
+  }
+</div>
+
+<script is:inline>
+  // Handle Discord share: copy URL to clipboard then open Discord in a new tab
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+    const link = target.closest('a[data-copy-url]');
+    if (!link) return;
+    e.preventDefault();
+    const url = link.getAttribute('data-copy-url');
+    const openUrl = link.getAttribute('data-open');
+    if (!url) return;
+
+    const copyToClipboard = async (text) => {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.focus();
+          ta.select();
+          try { document.execCommand('copy'); } catch {}
+          document.body.removeChild(ta);
+        }
+      } catch {}
+    };
+
+    copyToClipboard(url).finally(() => {
+      if (openUrl) window.open(openUrl, '_blank', 'noopener,noreferrer');
+    });
+  });
+</script>

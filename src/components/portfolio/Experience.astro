@@ -1,0 +1,56 @@
+---
+import ExperienceItem from "./ExperienceItem.astro";
+import Heading from "../ui/Heading.astro";
+import { Icon } from "astro-icon/components";
+
+const EXPERIENCE = [
+  {
+    date: "Apr 2025 - Sep 2025",
+    title: "Intern, Cyber Vulnerability Researcher",
+    company: "Centre for Strategic Infocomm Technologies (CSIT)",
+    logo: "/images/logos/csit-logo.png",
+    link: "https://www.csit.gov.sg/",
+    description:
+      "A research task was given to me to understand where certain sensitive data is being collected from, how it is handled, and whether any vulnerabilities exist within said processes. I applied my technical skills of reverse engineering and process analysis for static and dynamic analysis of normal 32/64-bit and Golang executables.",
+  },
+  {
+    date: "Apr 2024 - Jul 2025",
+    title: "Main Committee, Honorary Secretary (ISACA)",
+    company: "TP CDFSIG",
+    logo: "/images/logos/CDFSIG-logo.png",
+    description:
+      "Spearheaded a new initiative back in 2024, the SparkCTF competition, to allow Cybersecurity students to apply and learn new skills within the given 36 hour timeframe. I also organized the SparkCTF 2.0 in 2025 for the second consecutive year. Additionally, I have contributed and volunteered for Cybersecurity related events such as the HKIIT Visit and the Youth Cybersecurity Workshop (YCEP).",
+  },
+];
+---
+
+<section class="py-8 px-8 max-md:py-4 mb-4 scroll-m-16" id="experience">
+  <div class="flex flex-col pt-8 max-w-4xl mx-auto">
+    <div class="flex gap-4 items-center justify-center">
+      <Icon class="text-3xl dark:text-white text-blacktext" name="briefcase" />
+      <Heading text="Work" textGradient="Experience" level={2} />
+    </div>
+
+    <div class="relative max-md:mt-0 mt-8" aria-label="Professional experience">
+      <ol class="relative mt-10">
+        {
+          EXPERIENCE.map((experience, index) => (
+            <li>
+              <article
+                role="article"
+                aria-labelledby={`experience-title-${index}`}
+              >
+                <div
+                  class="flex flex-col gap-2  text-zinc-00 dark:text-zinc-300 md:col-span-3"
+                  aria-describedby={`experience-title-${index}`}
+                >
+                  <ExperienceItem {...experience} />
+                </div>
+              </article>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>

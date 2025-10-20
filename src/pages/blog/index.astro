@@ -1,0 +1,20 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/blog/Hero.astro";
+import Tags from "../../components/blog/Tags.astro";
+import ListPosts from "../../components/blog/ListPosts.astro";
+const pageTitle = "LZX Blog";
+const description = "A technical blog by LZX covering on Cybersecurity, Homelabbing and Technology.";
+const ogimage ={
+    url: "/images/blogimage.webp",
+    alt: "Default image of LZX Blog"
+};
+---
+
+<Layout  pageTitle={pageTitle} description={description} ogimage={ogimage}>
+    <Hero />
+    <Tags />
+    <div class="px-8 max-sm:px-4">
+        <ListPosts />
+    </div>
+</Layout>

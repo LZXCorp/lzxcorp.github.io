@@ -1,0 +1,115 @@
+---
+import Project from "./Project.astro";
+import Heading from "../ui/Heading.astro";
+import { Icon } from "astro-icon/components";
+
+const allPosts = await Astro.glob("../../pages/portfolio/projects/*.md");
+
+// Sort by descending date (most recent first)
+allPosts.sort(
+  (a, b) =>
+    new Date(b.frontmatter.pubDate).getTime() -
+    new Date(a.frontmatter.pubDate).getTime(),
+);
+---
+
+<section
+  class="bg-linear-to-t dark:from-[#0e0e10] from-white from-50% to-transparent to-100% scroll-m-16 relative pt-8 pb-32 max-2xl:px-8 max-md:pt-4"
+  id="projects"
+>
+  <div class="mx-auto max-w-7xl py-8">
+    <div class="flex gap-4 items-center justify-center text-center">
+      <Icon class="text-3xl dark:text-white text-blacktext" name="code" />
+      <Heading text="Projects" textGradient="Completed" level={2} />
+    </div>
+    <slot />
+  </div>
+
+  <div
+    id="containerProjects"
+    class="mx-auto max-w-7xl grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-5 p-2 py-4 max-h-[150vh] overflow-hidden transition-[max-height] duration-500 ease-in-out"
+  >
+    {
+      allPosts.map((post) => (
+        <Project
+          url={post.url}
+          title={post.frontmatter.title}
+          description={post.frontmatter.description}
+          date={post.frontmatter.pubDate}
+          languages={post.frontmatter.languages}
+          image={post.frontmatter.image}
+        />
+      ))
+    }
+  </div>
+
+  <div
+    id="moreProjects"
+    class="absolute bottom-0 left-0 w-full flex justify-center text-center bg-linear-to-t from-[#FBFEFD] dark:from-[#0e0e10] from-55% to-transparent to-100% pb-30 pt-52"
+  >
+    <button
+      class="absolute font-bold cursor-pointer text-mint-400 dark:text-mint-100 hover:text-mint-500 dark:hover:text-mint-300 transition-all"
+    >
+      View More Projects...
+    </button>
+  </div>
+</section>
+
+<script>
+  // Initialize behavior: hide 'View More' unless grid uses more than 2 rows
+  const initProjectsToggle = () => {
+    const container = document.querySelector('#containerProjects');
+    const moreProjects = document.querySelector('#moreProjects');
+    if (!container || !moreProjects) return;
+
+    const getRowCount = () => {
+      const children = Array.from(container.children);
+      if (children.length === 0) return 0;
+      const tops = new Set(
+        children.map((el) => Math.round(el.getBoundingClientRect().top))
+      );
+      return tops.size;
+    };
+
+    const updateVisibility = () => {
+      const rows = getRowCount();
+      if (rows <= 2) {
+        moreProjects.classList.add('hidden');
+      } else {
+        moreProjects.classList.remove('hidden');
+      }
+    };
+
+    // Set initial visibility
+    updateVisibility();
+
+    // Recalculate on resize (debounced)
+    let resizeTimer: number | null = null;
+    window.addEventListener('resize', () => {
+      if (resizeTimer !== null) {
+        clearTimeout(resizeTimer);
+      }
+      resizeTimer = window.setTimeout(updateVisibility, 150);
+    });
+
+    // Expand on click
+    moreProjects.addEventListener('click', () => {
+      // Expand container to show all projects by removing the max-height limit
+      container.classList.remove('max-h-[150vh]');
+      container.classList.add('max-h-none');
+
+      // Hide the overlay/button
+      moreProjects.classList.add('hidden');
+      // Optional: ensure layout recalculates before hiding (animation already on max-height)
+      setTimeout(() => {
+        moreProjects.classList.add('hidden');
+      }, 500);
+    });
+  };
+
+  if (document.readyState !== 'loading') {
+    initProjectsToggle();
+  } else {
+    document.addEventListener('DOMContentLoaded', initProjectsToggle);
+  }
+</script>
