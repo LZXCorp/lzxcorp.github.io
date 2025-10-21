@@ -182,6 +182,26 @@ a.inline-block.leading-5.pl-16 {
   @apply text-xl dark:text-gray-200 text-blacktext  max-md:text-lg  pl-4 pb-0;
 }
 
+/* Ensure list numbers/bullets don’t hang outside the container */
+.markdown ul,
+.markdown ol {
+  list-style-position: inside; /* bring markers inside the content box */
+  padding-inline-start: 0.9rem; /* modest indent so markers don’t touch the border */
+  margin-left: 0; /* prevent extra offset on some browsers */
+}
+
+/* Better spacing for nested lists */
+.markdown li > ul,
+.markdown li > ol {
+  padding-inline-start: 1.1rem;
+  margin-top: 0.25rem;
+}
+
+/* Optional: style markers for readability (safe across browsers) */
+.markdown ol li::marker {
+  font-variant-numeric: tabular-nums;
+}
+
 .markdown li {
   @apply text-xl dark:text-gray-200 text-blacktext  max-md:text-lg py-1;
 }

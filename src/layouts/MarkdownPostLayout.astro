@@ -47,6 +47,34 @@ import Heading from "../components/ui/Heading.astro";
     setTimeout(hydrateCopyButtons, 0);
   }
 
+  // Fix anchor navigation overscrolling when using content-visibility
+  function reanchorScroll() {
+    if (!location.hash) return;
+    const id = decodeURIComponent(location.hash.slice(1));
+    const el = document.getElementById(id);
+    if (!el) return;
+    const content = document.getElementById('content');
+    if (content) {
+      // Ensure full layout for accurate scroll position
+      content.style.contentVisibility = 'visible';
+      content.style.containIntrinsicSize = 'auto';
+    }
+    // Re-scroll to the target after layout stabilizes
+    requestAnimationFrame(() => {
+      el.scrollIntoView({ block: 'start' });
+    });
+  }
+
+  window.addEventListener('hashchange', () => {
+    reanchorScroll();
+  });
+
+  window.addEventListener('load', () => {
+    // Run twice to catch late layout changes
+    reanchorScroll();
+    setTimeout(reanchorScroll, 200);
+  });
+
   async function copyCode(block: HTMLElement, button: HTMLButtonElement) {
     const code = block.querySelector('code');
     if (!code) return;
