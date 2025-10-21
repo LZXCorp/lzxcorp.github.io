@@ -120,6 +120,23 @@ a.inline-block.leading-5.pl-16 {
   @apply text-base font-bold dark:text-white text-blacktext mt-6 mb-4;
 }
 
+/* Prevent long unbroken strings (e.g., Base64) from overflowing on mobile */
+.markdown,
+.markdown p,
+.markdown blockquote,
+.markdown li,
+.markdown a,
+.markdown :not(pre) > code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Defer rendering of off-screen long article content for better initial paint */
+#content {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 2000px; /* reserve space to avoid large reflow when revealed */
+}
+
 /* Reveal clickable heading '#' anchors on hover */
 .markdown :is(h1, h2, h3, h4, h5, h6) {
   scroll-margin-top: 6rem; /* avoid being hidden under sticky header */
@@ -314,6 +331,15 @@ a.inline-block.leading-5.pl-16 {
   background: color-mix(in oklab, white, var(--color-mint-50) 20%);
   color: inherit;
   margin: 1.5rem 0;
+  /* Controls the image's equal top/bottom/left spacing */
+  --cardlink-thumb-gap: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .markdown .cardlink {
+    margin: 0.9rem 0;
+    --cardlink-thumb-gap: 0.35rem;
+  }
 }
 
 .dark .markdown .cardlink {
@@ -329,9 +355,19 @@ a.inline-block.leading-5.pl-16 {
   color: inherit;
 }
 
+/* Keep a compact two-column layout on mobile with a smaller thumbnail */
 @media (max-width: 640px) {
   .markdown .cardlink__inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: 140px 1fr;
+    gap: 0.4rem;
+    align-items: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .markdown .cardlink__inner {
+    grid-template-columns: 110px 1fr;
+    gap: 0.35rem;
   }
 }
 
@@ -341,9 +377,21 @@ a.inline-block.leading-5.pl-16 {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  margin: 0.5rem; /* slight padding from card edges */
+  /* Equal spacing on top/bottom/left; right uses the grid gap */
+  margin-top: var(--cardlink-thumb-gap);
+  margin-bottom: var(--cardlink-thumb-gap);
+  margin-left: var(--cardlink-thumb-gap);
   margin-right: 0; /* avoid doubling with grid gap */
   border-radius: 0.5rem; /* rounded image corners */
+}
+
+@media (max-width: 640px) {
+  .markdown .cardlink__thumb {
+    margin-top: var(--cardlink-thumb-gap);
+    margin-bottom: var(--cardlink-thumb-gap);
+    margin-left: var(--cardlink-thumb-gap);
+    margin-right: 0;
+  }
 }
 
 .markdown .cardlink__content {
@@ -353,12 +401,26 @@ a.inline-block.leading-5.pl-16 {
   gap: 0.35rem;
 }
 
+@media (max-width: 640px) {
+  .markdown .cardlink__content {
+    padding: 0.6rem 0.65rem;
+    gap: 0.25rem;
+  }
+}
+
 .markdown .cardlink__title {
   margin: 0;
   font-size: 0.95rem; /* h5-like scale but smaller */
   line-height: 1.25rem;
   font-weight: 700;
   color: var(--color-blacktext);
+}
+
+@media (max-width: 400px) {
+  .markdown .cardlink__title {
+    font-size: 0.9rem;
+    line-height: 1.15rem;
+  }
 }
 
 .dark .markdown .cardlink__title {

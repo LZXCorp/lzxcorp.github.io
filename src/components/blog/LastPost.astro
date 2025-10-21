@@ -1,10 +1,11 @@
 ---
-const allPosts = await Astro.glob("../../pages/blog/posts/*.md");
-
 import Tag from "../ui/Tag.astro";
 import ReadMore from "../ui/ReadMore.astro";
 import Capsule from "../ui/Capsule.astro";
 import DatePub from "./DatePub.astro";
+
+const postModules = import.meta.glob("../../pages/blog/posts/*.md", { eager: true });
+const allPosts = Object.values(postModules) as any[];
 
 // Get the latest post using reduce
 const latestPost = allPosts.reduce((latest, current) => {
@@ -30,7 +31,7 @@ const imageAlt =
     >
       <article class="h-full flex flex-col justify-between max-sm:bg-zinc-900 max-sm:relative sm:bg-linear-to-t from-black/95 from-25% to-transparent max-sm:from-60% p-8 max-md:p-6 max-sm:mp-0 max-sm:p-0">
         <a
-          href=""
+          href={latestPost.url}
           class="sm:hidden relative top-0 left-0 w-full h-auto -z-0"
           aria-hidden="true"
         >

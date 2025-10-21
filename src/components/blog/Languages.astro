@@ -1,9 +1,16 @@
 ---
-const allPosts = await Astro.glob("../../pages/blog/posts/*.md");
+import Capsule from "../ui/Capsule.astro";
+import type { MarkdownInstance } from 'astro';
+
+interface Frontmatter {
+    languages: string[];
+}
+
+const postModules = import.meta.glob<MarkdownInstance<Frontmatter>>("../../pages/blog/posts/*.md", { eager: true });
+const allPosts: MarkdownInstance<Frontmatter>[] = Object.values(postModules);
 const languages = [
     ...new Set(allPosts.map((post) => post.frontmatter.languages).flat()),
 ];
-import Capsule from "../ui/Capsule.astro";
 
 const { variant = "default" } = Astro.props;
 

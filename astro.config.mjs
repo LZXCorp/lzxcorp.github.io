@@ -7,6 +7,7 @@ import icon from "astro-icon";
 import remarkCardlink from "./src/utils/remark-cardlink.mjs";
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeLazyMedia from './src/utils/rehype-lazy-media.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -27,6 +28,7 @@ export default defineConfig({
     remarkPlugins: [remarkCardlink],
     rehypePlugins: [
       rehypeSlug,
+      rehypeLazyMedia,
       [
         rehypeAutolinkHeadings,
         {

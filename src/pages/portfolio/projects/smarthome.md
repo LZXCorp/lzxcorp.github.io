@@ -19,7 +19,7 @@ It allows me to run my own server and leverage locally connected devices without
 
 Making use of the template provided by [HA Dashboard](https://youtu.be/W1bq6pqMCrI) to create a good-looking and clean dashboard for both Desktop and Mobile usage.
 
-![](attachment/smarthome/dashboard.png)
+![](../../../assets/smarthome/dashboard.png)
 
 ## 📊 Monitoring
 

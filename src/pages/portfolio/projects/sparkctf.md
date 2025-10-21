@@ -19,7 +19,7 @@ This CTF was initiated through the **Cybersecurity and Digital Forensics Student
 
 **SparkCTF** wouldn't have existed if not for my fellow co-organizers that helped make this CTF into a reality!
 
-![](attachment/sparkctf/people_banner.png)
+![](../../../assets/sparkctf/people_banner.png)
 
 Their professional socials are linked below:
 - **Co-Organizer:** [Justin How](https://www.linkedin.com/in/justin-how-291155241/)
@@ -63,13 +63,13 @@ image: https://opengraph.githubassets.com/ec17df9f5991f13a93c7b0cfff0e00027155c0
 3. **SparkCTF 2.0**
   - To be hosted on Dec 2025
 
-## Challenges Experience when Hosting a CTF
+## Obstacles
 
-There were several challenges that my team had to deal with to make this CTF possible.
+There were several obstacles that my team had to overcome to make this CTF possible.
 
 1. **Creating Challenges**
 
-    Our small team of 4 had to create over 60 challenges within a 2 month timeframe. We also did not have the resources to outsource challenge creation. This was eventually quickly solved thanks to our co-organizers for
+    Our small team of 4 had to create over 60 challenges within a 2 month timeframe. We also did not have the resources to outsource challenge creation. This was eventually solved thanks to our co-organizers for also contributing challenges for the CTF.
 
 2. **Infrastructure**
 

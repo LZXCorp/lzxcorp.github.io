@@ -2,8 +2,18 @@
 import Project from "./Project.astro";
 import Heading from "../ui/Heading.astro";
 import { Icon } from "astro-icon/components";
+import type { MarkdownInstance } from 'astro';
 
-const allPosts = await Astro.glob("../../pages/portfolio/projects/*.md");
+interface Frontmatter {
+  title: string;
+  description: string;
+  pubDate: string;
+  languages: string[];
+  image: unknown;
+}
+
+const projectModules = import.meta.glob<MarkdownInstance<Frontmatter>>("../../pages/portfolio/projects/*.md", { eager: true });
+const allPosts: MarkdownInstance<Frontmatter>[] = Object.values(projectModules);
 
 // Sort by descending date (most recent first)
 allPosts.sort(

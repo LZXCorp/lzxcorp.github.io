@@ -1,5 +1,13 @@
 ---
-const allPosts = await Astro.glob("../../pages/blog/posts/*.md");
+import type { MarkdownInstance } from 'astro';
+
+interface Frontmatter {
+  title: string;
+  pubDate: string;
+}
+
+const postModules = import.meta.glob<MarkdownInstance<Frontmatter>>("../../pages/blog/posts/*.md", { eager: true });
+const allPosts: MarkdownInstance<Frontmatter>[] = Object.values(postModules);
 
 
 // Ensure posts have a date before sorting them

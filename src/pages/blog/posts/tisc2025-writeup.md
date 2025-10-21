@@ -48,14 +48,14 @@ MD5 (geoint.png) = ecc4b825de332c151372cd9bf53133b7
 ### Writeup
 
 1. The original image shows the map is facing **EAST**.
-   ![](attachment/tisc2025/45bd5dc97981d639bbec578c93355785.png)
+   ![](../../../assets/tisc2025/45bd5dc97981d639bbec578c93355785.png)
    
 2. Flipped the image to the north and reverse image search using Google to find the location of the lake.
-   ![](attachment/tisc2025/d1ab2c0e15fc962f32239379bb75628e.png)
-   ![](attachment/tisc2025/0f91ee9597ed0606d08c850e3d03c560.png)
+   ![](../../../assets/tisc2025/d1ab2c0e15fc962f32239379bb75628e.png)
+   ![](../../../assets/tisc2025/0f91ee9597ed0606d08c850e3d03c560.png)
 
 3. Searched the name of the location to get a map showing the names of the lakes.
-   ![](attachment/tisc2025/ba2eeaf12296a540bce61c65a6eae7c7.png)
+   ![](../../../assets/tisc2025/ba2eeaf12296a540bce61c65a6eae7c7.png)
 
 4. I formatted the name of the lake and submitted it as the flag.
 
@@ -80,16 +80,16 @@ Your mission is to analyse this bot’s code, uncover the hidden paths, and trac
 ### Writeup
 
 1. Entering any input into the chat gives me an access denied. There is also a hint 'The key to success is spectrecular', implying that 'spectrecular' is the key.
-   ![](attachment/tisc2025/c1d9ae186eef5cd53ee88ab4c8a84047.png)
+   ![](../../../assets/tisc2025/c1d9ae186eef5cd53ee88ab4c8a84047.png)
 
 2. The source code includes a passphrase which is a Vigenere cipher. Decoding it gives the instructions to verify identity using 'imaspectretor'
-   ![](attachment/tisc2025/762a74e14146c58d8eb68cdd8417b4f7.png)
-   ![](attachment/tisc2025/eacfb8f62e581dc3f4caaaea6518240b.png)
+   ![](../../../assets/tisc2025/762a74e14146c58d8eb68cdd8417b4f7.png)
+   ![](../../../assets/tisc2025/eacfb8f62e581dc3f4caaaea6518240b.png)
 
 3. From there I entered 'imaspectretor' with some random word. This gives the instructions to get the flag.
 
 4. Tell the tool to do a GET request on `/api/../supersecretflagendpoint` to get the flag. I initially tried to make use of `/supersecretflagendpoint` and `/api/supersecretflagendpoint` but it didn't work so I tried traversal. 
-   ![](attachment/tisc2025/d03685a6f1769cec9ac616b590374beb.png)
+   ![](../../../assets/tisc2025/d03685a6f1769cec9ac616b590374beb.png)
 
 ### Flag
 
@@ -110,32 +110,32 @@ We've recovered a file from an SD card. It seems important, can you find the hid
 *Day 1 onwards...*
 
 1. Looking at the contents of the file and searching for it, I found out that this is G-code.
-   ![](attachment/tisc2025/6c5ad4786d287479026c8d2a92f09eaa.png)
-   ![](attachment/tisc2025/74c90394d47c1f400666b8e924e84f03.png)
+   ![](../../../assets/tisc2025/6c5ad4786d287479026c8d2a92f09eaa.png)
+   ![](../../../assets/tisc2025/74c90394d47c1f400666b8e924e84f03.png)
 
 2. Using an online G-Code visualizer, https://ncviewer.com/, I could see a 3D model and a strange cube.
-   ![](attachment/tisc2025/b7846d211e4a09621bb75b04c01f4ecd.png)
+   ![](../../../assets/tisc2025/b7846d211e4a09621bb75b04c01f4ecd.png)
 
 3. At first I thought the X and Y coordinates of the small vertical Z-Axis lines between layers were part of the solution. However, when I parsed and decoded from decimal to ASCII, it gave me rubbish. 
-   ![](attachment/tisc2025/abed814a43a1431853a5abda184d2f3b.png)
+   ![](../../../assets/tisc2025/abed814a43a1431853a5abda184d2f3b.png)
 
 *Day 2 onwards...*
 
 4. I looked from a top-view perspective and saw a weird plot near origin. It seems to be random vertical lines near origin.
-   ![](attachment/tisc2025/4388fb029c64402bc5d2c8d05e0813b9.png)
-   ![](attachment/tisc2025/5cd27ae1676c33b39ca621630430c127.png)
+   ![](../../../assets/tisc2025/4388fb029c64402bc5d2c8d05e0813b9.png)
+   ![](../../../assets/tisc2025/5cd27ae1676c33b39ca621630430c127.png)
 
 5. I selected one of the points to identify the piece of code that is in-charge of creating this. I later went into the code and found that the points are the same in every layer, hence the vertical lines.
-   ![](attachment/tisc2025/843d2dba03a9cbfc559b1e8308e4c0b8.png)
-   ![](attachment/tisc2025/6a0f8d516943c2f7dcce5f5a48802099.png)
+   ![](../../../assets/tisc2025/843d2dba03a9cbfc559b1e8308e4c0b8.png)
+   ![](../../../assets/tisc2025/6a0f8d516943c2f7dcce5f5a48802099.png)
 
 6. I then identified the start and end of the data points for one layer (since all of them are basically the same).
-   ![](attachment/tisc2025/6d458528c901ca44e8436db0f456c463.png)
-   ![](attachment/tisc2025/ef1bd508f2ebc58d4ba1b906bf16bff4.png)
+   ![](../../../assets/tisc2025/6d458528c901ca44e8436db0f456c463.png)
+   ![](../../../assets/tisc2025/ef1bd508f2ebc58d4ba1b906bf16bff4.png)
 
 7. Looking at the extracted datapoints, they all have this `e-X` at the very end. After investigating further, I found that the numbers are within the range of an IEEE-754 **float32** bit patterns can look like arbitrary 32-bit words.
-   ![](attachment/tisc2025/f45c40e8f6f0e3d69e8b0acc0df8590f.png)
-   ![](attachment/tisc2025/4ab4cecc523abe5d12e53a5549c1d8b3.png)
+   ![](../../../assets/tisc2025/f45c40e8f6f0e3d69e8b0acc0df8590f.png)
+   ![](../../../assets/tisc2025/4ab4cecc523abe5d12e53a5549c1d8b3.png)
 
 8. Create a script that decodes from the float32 -> bytes -> UTF-16 text.
 
@@ -205,13 +205,13 @@ TISC{thr33_d33_pr1n71n9_15_FuN_4c3d74845bc30de033f2e7706b585456}
 ### Additional Failed Attempts
 
 1. Tried using the distance between the datapoints for the paths then decoding them.
-   ![](attachment/tisc2025/50fecfa75bbf616573eef62af1d8b027.png)
+   ![](../../../assets/tisc2025/50fecfa75bbf616573eef62af1d8b027.png)
 
 2. Made use of the vertical line coordinates to create a barcode
-   ![](attachment/tisc2025/ff3de8e6161735e80408576fa58466f6.png)
+   ![](../../../assets/tisc2025/ff3de8e6161735e80408576fa58466f6.png)
 
 3. Create glyphs using the datapoints to a grid
-   ![](attachment/tisc2025/35c88a4881dbc633bf39a61df717343d.png)
+   ![](../../../assets/tisc2025/35c88a4881dbc633bf39a61df717343d.png)
 
 ---
 
@@ -229,10 +229,10 @@ Good luck, agent. You are the firewall now.
 
 *Day 3 onwards...*
 
-![](attachment/tisc2025/8aea4cb8538f2d34bccd173e9fbe747c.png)
+![](../../../assets/tisc2025/8aea4cb8538f2d34bccd173e9fbe747c.png)
 
-![](attachment/tisc2025/a048db96dc34744842b1bbe83a86ce4b.png)
-![](attachment/tisc2025/2ee81efc09070d5cc7362eed5a7f10ec.png)
+![](../../../assets/tisc2025/a048db96dc34744842b1bbe83a86ce4b.png)
+![](../../../assets/tisc2025/2ee81efc09070d5cc7362eed5a7f10ec.png)
 
 Identify the bot
 > Hello! I am Spectre-Containment-Bot. My purpose is to assist in analyzing and understanding hidden messages and data, particularly focusing on cybersecurity matters. How can I assist you today?
@@ -243,7 +243,7 @@ What do scanners flag?
 > Scanners, particularly those used for security purposes, can \[REDACTED\] various types of potential threats or issues in a system or network. These might include malware, viruses, suspicious patterns, anomalies, or any signs of unauthorized or harmful activities. Their primary function is to detect and alert on possible security risks to help maintain the integrity and safety of computing environments.
 
 For some reason, the word 'flag' is redacted from the statement.
-![](attachment/tisc2025/a43b45dc1f757f435c88d8539a375e7a.png)
+![](../../../assets/tisc2025/a43b45dc1f757f435c88d8539a375e7a.png)
 
 Any prompt that contains the words 'code' will give the unauthorized error.
 ```json
@@ -361,7 +361,7 @@ image: https://miro.medium.com/v2/resize:fit:1024/0*B71PA73wrNoLRkmR.jpeg
 
 
 Modified the 6th byte from `02` to `01` which modified the program from `MSB` to `LSB`, solving the issue.
-![](attachment/tisc2025/1eca11821a5ef746a3cd47563fb00c81.png)
+![](../../../assets/tisc2025/1eca11821a5ef746a3cd47563fb00c81.png)
 
 ```sh
 # file syntra-server-modif 
@@ -380,7 +380,7 @@ The JSON file with all the data is added into the RE tool.
 The binary entry point is `main_main` and at first glance, it seems to expose a website port 3000.
 
 There is also logic relating to Go HTTP server such as middleware operations and CORS 
-![](attachment/tisc2025/e136048170a28f8613f953152466ef59.png)
+![](../../../assets/tisc2025/e136048170a28f8613f953152466ef59.png)
 
 From this, it can be deduced that this binary is supposed to be run as a backend for the radio frontend.
 
@@ -434,7 +434,7 @@ Found another endpoint for a `engine.POST("/", main_main_func2)`.
 ### Flag Location
 
 There is an audio file that can be loaded called `assets/flag.mp3` in the `main_determineAudioResource()` function.
-![](attachment/tisc2025/d7262792680fce4e6088c8a1b5f9369e.png)
+![](../../../assets/tisc2025/d7262792680fce4e6088c8a1b5f9369e.png)
 
 Found some stuff here that could be useful for later.
 ```
@@ -462,13 +462,13 @@ Found some stuff here that could be useful for later.
 ###### Preliminary Analysis
 
 The website has buttons and dials to play around with.
-![](attachment/tisc2025/7195d71a7e114260f992b1eef3ff58e9.png)
+![](../../../assets/tisc2025/7195d71a7e114260f992b1eef3ff58e9.png)
 
 It checks for the health of the backend at the start.
-![](attachment/tisc2025/41e36399c1b2fc43e366cf90f1efa56c.png)
+![](../../../assets/tisc2025/41e36399c1b2fc43e366cf90f1efa56c.png)
 
 The `Play` and `Next` button performs API calls to `/?t=X`.
-![](attachment/tisc2025/b9d2c59df361760c3fb362bb4713fd2d.png)
+![](../../../assets/tisc2025/b9d2c59df361760c3fb362bb4713fd2d.png)
 The `Play` button seems to only perform the API request when there is no music loaded.
 
 The black dial changes the speed of the music (which for some reason distorts it like crazy).
@@ -958,7 +958,7 @@ Upload succeeded, saved response to response.mp3
 ```
 
 Querying for the string `TISC` gave the flag, completing this challenge.
-![](attachment/tisc2025/e25eb1631056d96b5d7de42d97b35578.png)
+![](../../../assets/tisc2025/e25eb1631056d96b5d7de42d97b35578.png)
 
 ### Flag
 
@@ -985,17 +985,17 @@ Good luck, and may your passkeys guide you to victory!
 #### Analysis
 
 Registered as a new user with a passkey associated with it.
-![](attachment/tisc2025/c8380b996c0b8eddc20e11e283cc17c3.png)
-![](attachment/tisc2025/2ecd2614f494d3d7a6528ba77f9b78a1.png)
+![](../../../assets/tisc2025/c8380b996c0b8eddc20e11e283cc17c3.png)
+![](../../../assets/tisc2025/2ecd2614f494d3d7a6528ba77f9b78a1.png)
 
 There are two dashboards.
 - `/member`
 - `/admin`
 
-![](attachment/tisc2025/7aca257d0ddbf96e2ff7e7d8e4172a51.png)
+![](../../../assets/tisc2025/7aca257d0ddbf96e2ff7e7d8e4172a51.png)
 
 However, my account does not have admin privileges. Thus, I got routed into `/notadmin`.
-![](attachment/tisc2025/e2be2aa69d9a9777fddb6018c011645b.png)
+![](../../../assets/tisc2025/e2be2aa69d9a9777fddb6018c011645b.png)
 
 Here are the auth endpoints I've found:
 - `/register`
@@ -1032,16 +1032,16 @@ Full login flow.
 #### Attempted
 
 Attempted to intercept and modify the response of the `/register/auth` and changed the username in the script to `admin` to create an admin passkey.
-![](attachment/tisc2025/7fbed208f113eef2c30e5c410ae19230.png)
-![](attachment/tisc2025/dae8246455d92b052e0c09d6cbacdf17.png)
-![](attachment/tisc2025/bb525ebb2f43d050cf608f59cfb2025f.png)
+![](../../../assets/tisc2025/7fbed208f113eef2c30e5c410ae19230.png)
+![](../../../assets/tisc2025/dae8246455d92b052e0c09d6cbacdf17.png)
+![](../../../assets/tisc2025/bb525ebb2f43d050cf608f59cfb2025f.png)
 
 However, it did not redirect me to the dashboard. Attempting to make use of the created passkey did not work out.
-![](attachment/tisc2025/bc21e834fdf294941ea285323882112d.png)
+![](../../../assets/tisc2025/bc21e834fdf294941ea285323882112d.png)
 
 Obtaining the `credId_b64url` (from registration) and replacing the credential ID from the login auth page gave the response of `Invalid passkey credential`.
-![](attachment/tisc2025/493dcae16722cadc8c58491667a24017.png)
-![](attachment/tisc2025/4e1e448bdf259fee11b914b9339b87b0.png)
+![](../../../assets/tisc2025/493dcae16722cadc8c58491667a24017.png)
+![](../../../assets/tisc2025/4e1e448bdf259fee11b914b9339b87b0.png)
 
 I also attempted to make use of [WebDevAuthn]([https://gramthanos.github.io/WebDevAuthn/](https://gramthanos.github.io/WebDevAuthn/)) extension to make things easier for myself. However, due to a race condition with Windows Hello Authenticator and how the credential payload is created, I could not make use of **WebDevAuthn**.
 
@@ -1053,16 +1053,16 @@ I basically did the same thing but instead of modifying the `const username` var
    
    Before submitting the form, I turned on Intercept in Burpsuite. Ensure that **Settings > Proxy > Response interception rules** is turned on cause we are modifying that.
    
-   ![](attachment/tisc2025/cb09071335530b5e24b9225397d0d172.png)
-   ![](attachment/tisc2025/58195959e4ebe628d6351d77ae96f934.png)
-   ![](attachment/tisc2025/76aa79ad7f643b5f2bded5f3e85f7122.png)
+   ![](../../../assets/tisc2025/cb09071335530b5e24b9225397d0d172.png)
+   ![](../../../assets/tisc2025/58195959e4ebe628d6351d77ae96f934.png)
+   ![](../../../assets/tisc2025/76aa79ad7f643b5f2bded5f3e85f7122.png)
 
 2. In the intercepted **RESPONSE** of `/register/auth`, modify the credential creation usernames and replace them with `admin`. Do not modify the actual `const username` variable.
-   ![](attachment/tisc2025/dbd9509704bc41593acc80620f334b7f.png)
-   ![](attachment/tisc2025/8c5c10f3fdd7997d6d86722900f806ec.png)
+   ![](../../../assets/tisc2025/dbd9509704bc41593acc80620f334b7f.png)
+   ![](../../../assets/tisc2025/8c5c10f3fdd7997d6d86722900f806ec.png)
 
 3. Within your HTTP History, find the `302 POST /register` and copy the attestation object.
-   ![](attachment/tisc2025/21cda36c4e6a2451c9ade314050b96af.png)
+   ![](../../../assets/tisc2025/21cda36c4e6a2451c9ade314050b96af.png)
    
 4. Decode to Base64 then further decode the `authData` using `cbor2`. Afterwards, copy the value in `credId_b64url`.
 ```json
@@ -1088,15 +1088,15 @@ I basically did the same thing but instead of modifying the `const username` var
    
    Before submitting the form, I turned on Intercept in Burpsuite once again.
    
-   ![](attachment/tisc2025/cb09071335530b5e24b9225397d0d172.png)
-   ![](attachment/tisc2025/31c9a4894f6edfcd2fd4db17dcb4d37d.png)
+   ![](../../../assets/tisc2025/cb09071335530b5e24b9225397d0d172.png)
+   ![](../../../assets/tisc2025/31c9a4894f6edfcd2fd4db17dcb4d37d.png)
 
 5. Modified the `allowCredentials` in the intercepted **RESPONSE** and pasted in the `credId_b64url` from Step 4.
-   ![](attachment/tisc2025/781e8c0326ebbf21b0dbdfde8bd835a4.png)
-   ![](attachment/tisc2025/5449cc73b331a7acee8f902a2ec1cba3.png)
+   ![](../../../assets/tisc2025/781e8c0326ebbf21b0dbdfde8bd835a4.png)
+   ![](../../../assets/tisc2025/5449cc73b331a7acee8f902a2ec1cba3.png)
 
 6. Now I have access to the `/admin` endpoint, getting me the flag.
-   ![](attachment/tisc2025/60c705f431f89d85026c755dcd3ac6c8.png)
+   ![](../../../assets/tisc2025/60c705f431f89d85026c755dcd3ac6c8.png)
 
 ### Flag
 
@@ -1120,11 +1120,11 @@ Scratch beneath the surface. Unravel the yarn of lies. Every cat may hold a clue
 #### Preliminary Analysis
 
 There is a form that I can fill to generate a certificate. It does a POST request to `/generate-flyer` and I receive a "CERTIFIED GOOD KITTY" PDF file.
-![](attachment/tisc2025/5b01a242bfafa0e4214257696732c52e.png)
-![](attachment/tisc2025/40fe2b57ddd64ab265c26fea07441b35.png)
+![](../../../assets/tisc2025/5b01a242bfafa0e4214257696732c52e.png)
+![](../../../assets/tisc2025/40fe2b57ddd64ab265c26fea07441b35.png)
 
 Doing a GET request to the same endpoint `/generate-flyer` returns me back a lot of 'None' values.
-![](attachment/tisc2025/cbb2bb09b32be1fe6f867dd8f7c4fba8.png)
+![](../../../assets/tisc2025/cbb2bb09b32be1fe6f867dd8f7c4fba8.png)
 
 I went ahead and tried using HTML elements and set the description to:
 ```html
@@ -1132,11 +1132,11 @@ I went ahead and tried using HTML elements and set the description to:
 ```
 
 It seems that the HTML response got successfully parsed, which means that there is no sanitization.
-![](attachment/tisc2025/77fe8cdfcd2319670a9b52665faa87c4.png)
+![](../../../assets/tisc2025/77fe8cdfcd2319670a9b52665faa87c4.png)
 
 
 The website is run on an AWS EC2 instance after doing an IP lookup. The challenge description hinted at Cloud being the focus point of the challenge, so I will start focusing my efforts into Cloud SSRF techniques.
-![](attachment/tisc2025/4876334ce0ee2c65cc9e92fa362d782b.png)
+![](../../../assets/tisc2025/4876334ce0ee2c65cc9e92fa362d782b.png)
 
 The next section will be checking whether it is vulnerable to Cloud-based SSRF techniques.
 
@@ -1192,23 +1192,23 @@ I ended up going with this script.
 
 Here are some test queries I did that aren't particularly useful for this CTF.
 `file:///etc/os-release`
-![](attachment/tisc2025/84ce47ca49bbfc6b2f6d0ccf3fa09ec6.png)
+![](../../../assets/tisc2025/84ce47ca49bbfc6b2f6d0ccf3fa09ec6.png)
 
 `file:///etc/hostname`
-![](attachment/tisc2025/1389717337afbe959ca1bcc470efe51c.png)
+![](../../../assets/tisc2025/1389717337afbe959ca1bcc470efe51c.png)
 
 `file:///var/lib/cloud/data/instance-id`
-![](attachment/tisc2025/664772c720e43b3fcda8181de2306c0d.png)
+![](../../../assets/tisc2025/664772c720e43b3fcda8181de2306c0d.png)
 
 #### Website and Proxy Analysis (through SSRF)
 
 Here are some files that helped in the CTF process.
 `file:///var/log/cloud-init.log`
-![](attachment/tisc2025/7118300d803dd8f50d1f1489e4628d31.png)
+![](../../../assets/tisc2025/7118300d803dd8f50d1f1489e4628d31.png)
 *A 17-page PDF showing DEBUG logs*
 
 Found app location in the `file:///var/log/syslog`
-![](attachment/tisc2025/5e9c8cdf49408ff8c81d38f52a528f76.png)
+![](../../../assets/tisc2025/5e9c8cdf49408ff8c81d38f52a528f76.png)
 
 And from there also found the exact version of the `wkhtmltopdf` used.
 ```
@@ -1216,7 +1216,7 @@ wkhtmltopdf amd64 0.12.6-2build2
 ```
 
 Thus, managing to get the `/home/ubuntu/app/app.py`
-![](attachment/tisc2025/4a2e0858771d49e7b77e0619679ba925.png)
+![](../../../assets/tisc2025/4a2e0858771d49e7b77e0619679ba925.png)
 
 The **CORS** code is a hint implying that I am supposed to make some IMDSv2 request to extract metadata.
 
@@ -1665,6 +1665,24 @@ image: https://miro.medium.com/v2/resize:fit:1200/1*4pVou7pv_-OrQEjYoAHMIg.png
 Following the instructions, I managed to un-`NoEcho` the parameter to reveal the contents of the final piece of the flag.
 
 Start by updating the stack (and with `--disable-rollback` cause it doesn't work with `CREATE_FAILED` stacks).
+
+```yaml
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Flag part 2
+
+Parameters:
+  flagpt2:
+    Type: String
+    #NoEcho: true
+
+Resources:
+  AppDataStore:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub app-data-sandbox-bucket
+```
+
 ```shell
 aws cloudformation update-stack \
   --stack-name pawxy-sandbox-83dbf0fb \
@@ -1735,7 +1753,7 @@ src/
 ```
 
 I first had to deal with the Docker registry confirmed to be partially degraded and it sustained this status for the next 4 hours.
-![](attachment/tisc2025/d990d51573928757402466fbf77bcff4.png)
+![](../../../assets/tisc2025/d990d51573928757402466fbf77bcff4.png)
 
 After the Docker registry changed to **Operational**, I went and used the build command and got this error:
 ```shell
@@ -1966,10 +1984,10 @@ php://filter/convert.iconv.UTF8.CSISO2022KR|...[truncated]...|convert.base64-dec
 *The output has been [truncated], with the full length of the payload being 4130 characters*.
 
 Setting this as the `$series` string value and executing the fetch action gave the following output:
-![](attachment/tisc2025/213fee568d1f29a51a55496b9fa27051.png)
+![](../../../assets/tisc2025/213fee568d1f29a51a55496b9fa27051.png)
 
 Searching for the text `TISC` lead me to the flag value, thus solving the challenge.
-![](attachment/tisc2025/5f28bdfa00a8f030849a6aaa4e937300.png)
+![](../../../assets/tisc2025/5f28bdfa00a8f030849a6aaa4e937300.png)
 
 ### Flag
 
