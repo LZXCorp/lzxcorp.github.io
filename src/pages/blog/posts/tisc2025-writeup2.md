@@ -4,14 +4,14 @@ title: TISC 2025 | CTF Writeups [Part 2]
 author: LZX Corp
 description: "Writeups for all completed challenges in the TISC 2025 CTF"
 image:
-  url: "/images/posts/csit_tisc_2025_opt1_v4_thumbnail-_600x423_new_cta.jpg"
+  url: "/images/posts/tisc25_writeup2.png"
   alt: "TISC 2025 Banner"
 pubDate: 2025-10-22
 tags:
   [
     "documentation", "writeup", "ctf"
   ]
-languages: ["python", "golang", "c", "javascript",  "aws", "docker", "php"]
+languages: ["python", "javascript",  "aws", "docker", "php"]
 ---
 
 This is a continuation of the TISC 2025 Writeups. Please read from [Part 1](/blog/posts/tisc2025-writeup1).
@@ -915,7 +915,7 @@ You would expect `s:4:"name";s:35:"x";` to covert to `$name = "x"`. However, the
 
 However, even if we did make use of the multi-byte exploit, there is still the issue of double definitions of fields. From the same serialized payload above, you can see that `species` is defined **twice**.
 
-We can make use of `\x00` (`%00`) null bytes. The string after the null bytes will get removed. Why does this happen? This is because the PBO escaping quotes step as a by-product of escaping single-quotes also removed and parsed the null byte (I am not sure how this works but this is what I observed during testing.
+We can make use of `\x00` (`%00`) null bytes. The string after the null bytes will get removed. Why does this happen? This is because the PBO escaping quotes step as a by-product of escaping single-quotes also removed and parsed the null byte (I am not sure how this works but this is what I observed during testing).
 ```php
 $quoted = $this->pdo->quote($ser);
 ```
@@ -1059,7 +1059,7 @@ TISC{pHp_d3s3ri4liz3_4_fil3_inc1us!0n}
 
 ## My Final Thoughts
 
-Back when I was interning in CSIT, one of the main objectives that I made for myself was to get a CSIT shirt. However, I received devastating insight that only full-timers got the shirts making it impossible for me to obtain one for myself. Then one day, an intern came in with a TISC shirt which sparked an idea in me: "Why not I get this year's TISC shirt?". That was what I did, I was committed to getting the TISC SWAG before my compulsory National Service starts, making it impossible for me to partake in future TISC's.
+Back when I was interning in CSIT, one of the main objectives that I made for myself was to get a CSIT shirt. However, I received devastating insight that only full-timers got the shirts making it impossible for me to obtain one for myself. Then one day, an intern came in with a TISC shirt which sparked an idea in me: "Why not I get this year's TISC shirt?". That was what I did, I was committed to getting the TISC SWAG before I go NS, making it impossible for me to partake in future TISC's.
 
 Back in TISC 2024, I only completed 1 of 12 challenges which was expected since it was the 2nd CTF I've ever participated in and I only had a basic grasp of Cybersecurity. Now a year later, I managed to make it to the Top 50 placement and completed 8 of 12 challenges, a huge step up from last year.
 

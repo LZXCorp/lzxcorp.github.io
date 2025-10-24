@@ -4,14 +4,14 @@ title: TISC 2025 | CTF Writeups [Part 1]
 author: LZX Corp
 description: "Writeups for all completed challenges in the TISC 2025 CTF"
 image:
-  url: "/images/posts/csit_tisc_2025_opt1_v4_thumbnail-_600x423_new_cta.jpg"
+  url: "/images/posts/tisc25_writeup1.png"
   alt: "TISC 2025 Banner"
-pubDate: 2025-10-22
+pubDate: 2025-10-21
 tags:
   [
     "documentation", "writeup", "ctf"
   ]
-languages: ["python", "golang", "c", "javascript",  "aws", "docker", "php"]
+languages: ["python", "golang", "c", "javascript"]
 ---
 
 This is my technical writeup on The InfoSecurity Challenge (TISC) 2025 Capture the Flag (CTF) competition.
