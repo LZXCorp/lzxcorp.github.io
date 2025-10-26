@@ -2,17 +2,184 @@
 import Heading from "../ui/Heading.astro";
 import { Icon } from "astro-icon/components";
 
+const COMPETITION = [
+  {
+    title: "The InfoSecurity Challenge (TISC) 2025",
+    description: "Completed 8 / 12 challenges. Ranked 44th overall.",
+    issuer: "Centre for Strategic Infocomm Technologies (CSIT)",
+    logo: "/images/logos/csit-logo.png",
+    more: "/blog/posts/tisc2025-writeup1",
+    badgeicon: "https://cdn.certifier.io/6c98c6a3-c4c8-4acc-9d72-1954f2445f98/credentials/01k8a2cweqsh1g3zxmcnkqnje0/designs/01k8a29h2qz0k6t6g6h2k0resv/6CwcD-uVzf.png",
+    badgelink: "https://credsverse.com/credentials/d963e812-b2bb-40ef-8c23-7e1c56ff18da",
+    obtained: "10-2025",
+    accent: "rgb(255 90 0)",
+    tags: [
+      "CTF", "Cloud Security", "Web Exploitation", "Reverse Engineering"
+    ],
+  },
+  {
+    title: "Cyber Sports Challenge 2024",
+    description: "Completed 5 Levels and placed 4th overall in the Invitational Category.",
+    issuer: "Sentinel Programme",
+    logo: "/images/logos/sentinelsg.png",
+    badgeicon: "",
+    badgelink: "",
+    obtained: "11-2024",
+    accent: "rgb(125 77 216)",
+    tags: [
+      "CTF", "Network Analysis", "Rev"
+    ],
+  },
+  // {
+  //   title: "",
+  //   description: "",
+  //   issuer: "",
+  //   logo: "",
+  //   badgeicon: "",
+  //   badgelink: "",
+  //   obtained: "",
+  //   accent: "rgb(169 67 251)",
+  //   tags: [
+  //     "CTF",
+  //   ],
+  // }
+]
 ---
 
-<section class="py-8 px-8 max-md:py-4 mb-4 scroll-m-16" id="experience">
+<section class="py-8 px-8 max-md:py-4 mb-4 scroll-m-16" id="competitions">
   <div class="flex flex-col pt-8 max-w-4xl mx-auto">
     <div class="flex gap-4 items-center justify-center">
-      <Icon class="text-3xl dark:text-white text-blacktext" name="award" />
+      <Icon class="text-3xl dark:text-white text-blacktext" name="trophy" />
       <Heading text="All" textGradient="Competitions" level={2} />
     </div>
 
-    <div class="relative max-md:mt-0 mt-8" aria-label="Professional experience">
-      <ol class="relative mt-10">
+    <div class="relative max-md:mt-0 mt-8" aria-label="Competition achievements">
+      <ol class="relative mt-10 space-y-6">
+        {
+          COMPETITION.map((comp, index) => {
+            const CardTag = comp.badgelink ? "a" : "div";
+            return (
+              <li>
+                <article
+                  role="article"
+                  aria-labelledby={`comp-title-${index}`}
+                  class="relative"
+                >
+                  <CardTag
+                    {...(comp.badgelink
+                      ? {
+                          href: comp.badgelink,
+                          target: "_blank",
+                          rel: "noopener noreferrer",
+                          "aria-label": `Open ${comp.title} badge`,
+                        }
+                      : {})}
+                    class="group relative overflow-hidden rounded-3xl border border-white/10 bg-black/30 dark:bg-white/5 p-6 md:p-8 ring-1 ring-black/10 dark:ring-white/10 transition-all duration-300 hover:border-[var(--accent)]/50 hover:ring-[var(--accent)]/50 hover:shadow-[0_0_40px_-5px_var(--accent-blur)] flex flex-col md:flex-row gap-6 items-center"
+                    style={`--accent: ${comp.accent || "rgb(56 189 248)"}; --accent-blur: color-mix(in srgb, var(--accent) 60%, transparent); --accent-light: color-mix(in srgb, var(--accent) 30%, transparent);`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="pointer-events-none absolute inset-0 z-0 opacity-30"
+                    >
+                      <span class="absolute inset-0 bg-gradient-to-br from-[var(--accent-light)] via-transparent to-transparent" />
+                      <span class="absolute inset-0 bg-gradient-to-tl from-[var(--accent-light)] via-transparent to-transparent opacity-50" />
+                    </span>
+
+                    <span
+                      aria-hidden="true"
+                      class="pointer-events-none absolute inset-0 z-0 opacity-20"
+                      style="background-image: radial-gradient(circle at 2px 2px, var(--accent) 1px, transparent 1px); background-size: 32px 32px;"
+                    />
+
+                    <span
+                      aria-hidden="true"
+                      class="pointer-events-none absolute inset-0 z-0 animate-[spin_25s_linear_infinite] group-hover:animate-[spin_15s_linear_infinite]"
+                    >
+                      <span class="absolute -top-32 left-1/2 -translate-x-1/2 size-64 rounded-full bg-[radial-gradient(circle_at_center,_var(--accent),_transparent_70%)] opacity-20 blur-3xl group-hover:size-80 group-hover:opacity-50 transition-all duration-700" />
+                      
+                      <span class="absolute top-1/2 -right-32 -translate-y-1/2 size-72 rounded-full bg-[radial-gradient(circle_at_center,_var(--accent),_transparent_70%)] opacity-25 blur-3xl group-hover:size-88 group-hover:opacity-60 transition-all duration-700" />
+                      
+                      <span class="absolute -bottom-32 left-1/2 -translate-x-1/2 size-68 rounded-full bg-[radial-gradient(circle_at_center,_var(--accent),_transparent_70%)] opacity-18 blur-3xl group-hover:size-84 group-hover:opacity-55 transition-all duration-700" />
+                    </span>
+
+                    <span
+                      aria-hidden="true"
+                      class="pointer-events-none absolute inset-0 z-0 animate-[spin_20s_linear_infinite_reverse] group-hover:animate-[spin_12s_linear_infinite_reverse]"
+                    >
+                      <span class="absolute -top-24 -left-24 size-56 rounded-full bg-[radial-gradient(circle_at_center,_var(--accent-blur),_transparent_75%)] opacity-15 blur-3xl group-hover:size-72 group-hover:opacity-45 transition-all duration-700" />
+                      
+                      <span class="absolute -bottom-24 -right-24 size-60 rounded-full bg-[radial-gradient(circle_at_center,_var(--accent-blur),_transparent_75%)] opacity-20 blur-3xl group-hover:size-76 group-hover:opacity-50 transition-all duration-700" />
+                    </span>
+
+                    {(comp.badgeicon || comp.logo) && (
+                      <div class="relative shrink-0 z-10">
+                        <div class="relative">
+                          <img
+                            src={comp.badgeicon || comp.logo}
+                            alt={`${comp.title} ${comp.badgeicon ? 'badge' : 'logo'}`}
+                            class="h-32 w-32 md:h-40 md:w-40 object-contain opacity-95 transition-transform duration-300 group-hover:scale-110 rounded-2xl"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          {comp.badgeicon && comp.logo && (
+                            <img
+                              src={comp.logo}
+                              alt={`${comp.issuer} logo`}
+                              class="absolute -bottom-2 -right-2 h-10 w-10 md:h-12 md:w-12 object-contain drop-shadow-lg bg-white/90 dark:bg-black/90 p-1.5 rounded-lg"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    <div class="relative flex-1 z-10 text-center md:text-left">
+                      <h3
+                        id={`comp-title-${index}`}
+                        class="text-xl md:text-2xl font-bold leading-snug mb-2"
+                        style="color: var(--accent)"
+                      >
+                        {comp.title}
+                      </h3>
+                      
+                      <p class="text-sm md:text-base font-medium text-zinc-700 dark:text-white/80 mb-1">
+                        {comp.issuer}
+                      </p>
+                      
+                      <p class="text-sm md:text-base text-zinc-600 dark:text-white/70 mb-4">
+                        {comp.description}
+                      </p>
+
+                      <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                        {comp.tags.map((tag) => (
+                          <span
+                            class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset transition-colors"
+                            style="background-color: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); ring-color: color-mix(in srgb, var(--accent) 30%, transparent);"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      {comp.obtained && (
+                        <div class="mt-4 flex items-center gap-2 text-xs text-zinc-600 dark:text-white/60 justify-center md:justify-start">
+                          <Icon name="calendar" class="w-4 h-4" />
+                          <time datetime={comp.obtained}>
+                            {new Date(comp.obtained.split('-').reverse().join('-')).toLocaleDateString('en-US', {
+                              month: 'long',
+                              year: 'numeric'
+                            })}
+                          </time>
+                        </div>
+                      )}
+                    </div>
+                  </CardTag>
+                </article>
+              </li>
+            );
+          })
+        }
       </ol>
     </div>
   </div>

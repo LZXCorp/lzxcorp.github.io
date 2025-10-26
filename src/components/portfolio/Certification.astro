@@ -5,6 +5,35 @@ import { Icon } from "astro-icon/components";
 // badgelink and obtained are optional if NOT obtained yet
 // expires is optional if not applicable
 const CERTIFICATION = [
+  // {
+  //   title: "Certified Information Systems Auditor (CISA)",
+  //   issuer: "ISACA",
+  //   logo: "/images/logos/isaca.png",
+  //   badgeicon: "/images/cert/cisa.png",
+  //   badgelink: "",
+  //   obtained: "",
+  //   accent: "rgb(60 84 163)",
+  //   tags: [
+  //     "Theoretical",
+  //     "Auditing",
+  //     "Risk Management",
+  //     "Governance & Compliance",
+  //   ],
+  // },
+  // {
+  //   title: "Offensive Security Certified Professional (OSCP)",
+  //   issuer: "Offsec",
+  //   logo: "/images/logos/offsec.png",
+  //   badgeicon: "/images/cert/oscp.svg",
+  //   badgelink: "",
+  //   obtained: "",
+  //   accent: "rgb(255 90 0)",
+  //   tags: [
+  //     "Penetration Testing",
+  //     "Network Security",
+  //     "Exploitation"
+  //   ],
+  // },
   {
     title: "Certified Penetration Testing Specialist",
     issuer: "HackTheBox",
@@ -44,7 +73,7 @@ const CERTIFICATION = [
     obtained: "12-2024",
     expires: "01-2026",
     accent: "rgb(237 6 2)",
-    tags: ["Theoretical", "Ethical Hacking"],
+    tags: ["Theoretical", "Networking", "PKI Architecture"],
   },
   {
     title: "Certified Cloud Practitioner",
@@ -66,7 +95,6 @@ const parseMonthYear = (s: string | undefined) => {
   const month = Number(m);
   const year = Number(y);
   if (!Number.isFinite(month) || !Number.isFinite(year)) return null;
-  // End of the given month at 23:59:59.999
   return new Date(year, month, 0, 23, 59, 59, 999);
 };
 const now = new Date();
