@@ -1,10 +1,10 @@
 ---
 import Heading from "../ui/Heading.astro";
-import Tag from "../ui/Tag.astro";
 import { Icon } from "astro-icon/components";
 
 
 // badgelink and obtained are optional if NOT obtained yet
+// expires is optional if not applicable
 const CERTIFICATION = [
   {
     title: "Certified Penetration Testing Specialist",
@@ -14,6 +14,17 @@ const CERTIFICATION = [
     badgelink: "",
     obtained: "",
     accent: "rgb(169 67 251)",
+    tags: ["Penetration Testing", "Network Security", "Web Attacks", "Active Directory"],
+  },
+  {
+    title: "Solutions Architect (Associate)",
+    issuer: "Amazon Web Services (AWS)",
+    logo: "/images/logos/aws.svg",
+    badgeicon: "/images/cert/aws-saa.png",
+    badgelink: "",
+    obtained: "",
+    accent: "rgb(53 54 237)",
+    tags: ["AWS", "Cloud Computing", "Cloud Architecture", "Infrastructure Design"],
   },
   {
     title: "Certified Ethical Hacker",
@@ -22,7 +33,9 @@ const CERTIFICATION = [
     badgeicon: "/images/cert/ceh.png",
     badgelink: "",
     obtained: "12-2024",
+    expires: "01-2026",
     accent: "rgb(237 6 2)",
+    tags: ["Theoretical", "Ethical Hacking"]
   },
   {
     title: "Certified Cloud Practitioner",
@@ -31,9 +44,26 @@ const CERTIFICATION = [
     badgeicon: "/images/cert/aws-clf.png",
     badgelink: "https://www.credly.com/badges/5f9788c9-7233-44c7-bcd2-c7b44dccd075/public_url",
     obtained: "10-2024",
+    expires: "10-2027",
     accent: "rgb(255 153 0)",
+    tags: ["AWS", "Cloud Computing"]
   }
 ];
+
+const parseMonthYear = (s: string | undefined) => {
+  if (!s) return null;
+  const [m, y] = s.split("-") as [string, string];
+  const month = Number(m);
+  const year = Number(y);
+  if (!Number.isFinite(month) || !Number.isFinite(year)) return null;
+  // End of the given month at 23:59:59.999
+  return new Date(year, month, 0, 23, 59, 59, 999);
+};
+const now = new Date();
+const isExpired = (expires?: string) => {
+  const d = parseMonthYear(expires);
+  return d ? d.getTime() < now.getTime() : false;
+};
 ---
 <section class="py-8 px-8 max-md:py-4 mb-4 scroll-m-16" id="certifications">
   <div class="flex flex-col pt-8 max-w-6xl mx-auto">
@@ -47,6 +77,10 @@ const CERTIFICATION = [
         {
           CERTIFICATION.map((cert, index) => {
             const CardTag = cert.badgelink ? 'a' : 'div';
+            const obtainedStr = typeof cert.obtained === 'string' ? cert.obtained.trim() : '';
+            const expiresStr = typeof cert.expires === 'string' ? cert.expires.trim() : '';
+            const expired = isExpired(expiresStr);
+            const obtained = obtainedStr !== '';
             return (
               <li class="h-full">
                 <article role="article" aria-labelledby={`cert-title-${index}`} class="h-full">
@@ -97,15 +131,49 @@ const CERTIFICATION = [
                       )}
                     </div>
 
+                    <div class="mt-3 flex flex-wrap gap-2">
+                      {Array.isArray(cert.tags) && cert.tags.map((t) => (
+                        <span
+                          class="inline-flex items-center rounded-full border px-2 py-0.5 text-[0.7rem] font-medium leading-none transition-colors"
+                          style="border-color: var(--accent); color: color-mix(in srgb, var(--accent) 85%, white); background: color-mix(in srgb, var(--accent) 12%, transparent);"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
                     <div class="relative mt-6 flex items-center justify-between">
                       <div class="flex items-center gap-2">
-                        {(!cert.obtained || (typeof cert.obtained === 'string' && cert.obtained.trim() === '')) && (
-                          <Tag tag="In Progress" forceDark={true} />
+                        {expired ? (
+                          <span class="relative inline-flex items-center rounded-full border border-rose-400 text-rose-600 dark:text-rose-300 bg-rose-400/10 px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-rose-400/20 transition-colors group-hover:ring-rose-400/40 overflow-hidden">
+                            <span aria-hidden="true" class="pointer-events-none absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-rose-300/40 to-transparent transition-transform duration-700 ease-out will-change-transform group-hover:translate-x-[120%]" />
+                            <span class="relative z-[1]">Expired</span>
+                          </span>
+                        ) : obtained ? (
+                          <span class="relative inline-flex items-center rounded-full border border-emerald-400 text-emerald-600 dark:text-emerald-300 bg-emerald-400/10 px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-emerald-400/20 transition-colors group-hover:ring-emerald-400/40 overflow-hidden">
+                            <span aria-hidden="true" class="pointer-events-none absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-emerald-300/40 to-transparent transition-transform duration-700 ease-out will-change-transform group-hover:translate-x-[120%]" />
+                            <span class="relative z-[1]">Completed</span>
+                          </span>
+                        ) : (
+                          <span class="relative inline-flex items-center rounded-full border border-yellow-400 text-yellow-600 dark:text-yellow-300 bg-yellow-400/10 px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-yellow-400/20 transition-colors group-hover:ring-yellow-400/40 overflow-hidden">
+                            <span aria-hidden="true" class="pointer-events-none absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-yellow-300/40 to-transparent transition-transform duration-700 ease-out will-change-transform group-hover:translate-x-[120%]" />
+                            <span class="relative z-[1]">In Progress</span>
+                          </span>
                         )}
                         <div class="text-sm text-zinc-400 dark:text-white/70">
-                          <time datetime={cert.obtained || 'TBD'}>
-                            {cert.obtained ? cert.obtained : '—'}
-                          </time>
+                          {expired && expiresStr ? (
+                            <span>
+                              <span class="sr-only">Expired: </span>
+                              <time datetime={expiresStr}>{expiresStr}</time>
+                            </span>
+                          ) : obtained ? (
+                            <span>
+                              <span class="sr-only">Completed: </span>
+                              <time datetime={obtainedStr}>{obtainedStr}</time>
+                            </span>
+                          ) : (
+                            <time datetime="TBD">—</time>
+                          )}
                         </div>
                       </div>
                       {cert.badgelink && (
@@ -123,4 +191,4 @@ const CERTIFICATION = [
   </div>
 </section>
 
- 
+

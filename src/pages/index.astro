@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Experience from "../components/portfolio/Experience.astro";
 import Certification from "../components/portfolio/Certification.astro";
+import Competition from "../components/portfolio/Competition.astro";
 import HeroIndex from "../components/portfolio/HeroIndex.astro";
 import ListProjects from "../components/portfolio/ListProjects.astro";
 import { getCollection } from "astro:content";
@@ -18,5 +19,6 @@ const { pageTitle, pageDescription, OGImage } = staticData.data;
   <HeroIndex />
   <Experience />
   <Certification />
+  <!-- <Competition /> -->
   <ListProjects />
 </Layout>
