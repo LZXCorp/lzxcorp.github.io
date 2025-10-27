@@ -52,7 +52,7 @@ const CERTIFICATION = [
   {
     title: "Solutions Architect (Associate)",
     issuer: "Amazon Web Services (AWS)",
-    logo: "/images/logos/aws.svg",
+    logo: "/images/logos/aws.webp",
     badgeicon: "/images/cert/aws-saa.png",
     badgelink: "",
     obtained: "",
@@ -78,7 +78,7 @@ const CERTIFICATION = [
   {
     title: "Certified Cloud Practitioner",
     issuer: "Amazon Web Services (AWS)",
-    logo: "/images/logos/aws.svg",
+    logo: "/images/logos/aws.webp",
     badgeicon: "/images/cert/aws-clf.png",
     badgelink:
       "https://www.credly.com/badges/5f9788c9-7233-44c7-bcd2-c7b44dccd075/public_url",
@@ -140,7 +140,7 @@ const isExpired = (expires?: string) => {
                           "aria-label": `Open ${cert.title} badge`,
                         }
                       : {})}
-                    class="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-black/30 dark:bg-white/5 p-6 ring-1 ring-black/10 dark:ring-white/10 transition-all duration-300 hover:border-[var(--accent)]/50 hover:ring-[var(--accent)]/50 hover:shadow-[0_0_30px_-5px_var(--accent-blur)] flex flex-col"
+                    class="group relative h-full overflow-hidden rounded-2xl border border-zinc-200/50 dark:border-white/10 bg-white/80 dark:bg-[var(--accent)]/5 backdrop-blur-sm p-6 ring-1 ring-zinc-200/50 dark:ring-white/10 transition-all duration-300 hover:border-[var(--accent)]/50 hover:ring-[var(--accent)]/50 hover:shadow-[0_0_30px_-5px_var(--accent-blur)] flex flex-col"
                     style={`--accent: ${cert.accent || "rgb(56 189 248)"}; --accent-blur: color-mix(in srgb, var(--accent) 60%, transparent); --accent-light: color-mix(in srgb, var(--accent) 30%, transparent);`}
                   >
                     <span
@@ -198,7 +198,7 @@ const isExpired = (expires?: string) => {
                         >
                           {cert.title}
                         </h3>
-                        <p class="text-xs font-medium text-zinc-700 dark:text-white/80">
+                        <p class="text-xs font-medium text-zinc-900 dark:text-white/80">
                           {cert.issuer}
                         </p>
                       </div>
@@ -230,7 +230,7 @@ const isExpired = (expires?: string) => {
                         cert.tags.map((t) => (
                           <span
                             class="inline-flex items-center rounded-full border px-2 py-0.5 text-[0.7rem] font-medium leading-none transition-colors"
-                            style="border-color: var(--accent); color: color-mix(in srgb, var(--accent) 85%, white); background: color-mix(in srgb, var(--accent) 12%, transparent);"
+                            style="border-color: color-mix(in srgb, var(--accent) 70%, transparent); color: var(--accent); background: color-mix(in srgb, var(--accent) 20%, transparent);"
                           >
                             {t}
                           </span>
@@ -240,7 +240,7 @@ const isExpired = (expires?: string) => {
                     <div class="relative mt-6 flex items-center justify-between">
                       <div class="flex items-center gap-2">
                         {expired ? (
-                          <span class="relative inline-flex items-center rounded-full border border-rose-400 text-rose-600 dark:text-rose-300 bg-rose-400/10 px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-rose-400/20 transition-colors group-hover:ring-rose-400/40 overflow-hidden">
+                          <span class="relative inline-flex items-center rounded-full border border-rose-400 text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-400/10 px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-rose-400/20 transition-colors group-hover:ring-rose-400/40 overflow-hidden">
                             <span
                               aria-hidden="true"
                               class="pointer-events-none absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-rose-300/40 to-transparent transition-transform duration-700 ease-out will-change-transform group-hover:translate-x-[120%]"
@@ -248,7 +248,7 @@ const isExpired = (expires?: string) => {
                             <span class="relative z-[1]">Expired</span>
                           </span>
                         ) : obtained ? (
-                          <span class="relative inline-flex items-center rounded-full border border-emerald-400 text-emerald-600 dark:text-emerald-300 bg-emerald-400/10 px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-emerald-400/20 transition-colors group-hover:ring-emerald-400/40 overflow-hidden">
+                          <span class="relative inline-flex items-center rounded-full border border-emerald-400 text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-400/10 px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-emerald-400/20 transition-colors group-hover:ring-emerald-400/40 overflow-hidden">
                             <span
                               aria-hidden="true"
                               class="pointer-events-none absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-emerald-300/40 to-transparent transition-transform duration-700 ease-out will-change-transform group-hover:translate-x-[120%]"
@@ -256,7 +256,7 @@ const isExpired = (expires?: string) => {
                             <span class="relative z-[1]">Completed</span>
                           </span>
                         ) : (
-                          <span class="relative inline-flex items-center rounded-full border border-yellow-400 text-yellow-600 dark:text-yellow-300 bg-yellow-400/10 px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-yellow-400/20 transition-colors group-hover:ring-yellow-400/40 overflow-hidden">
+                          <span class="relative inline-flex items-center rounded-full border border-yellow-400 text-yellow-700 dark:text-yellow-300 bg-yellow-50 dark:bg-yellow-400/10 px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-yellow-400/20 transition-colors group-hover:ring-yellow-400/40 overflow-hidden">
                             <span
                               aria-hidden="true"
                               class="pointer-events-none absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-yellow-300/40 to-transparent transition-transform duration-700 ease-out will-change-transform group-hover:translate-x-[120%]"
@@ -264,7 +264,7 @@ const isExpired = (expires?: string) => {
                             <span class="relative z-[1]">In Progress</span>
                           </span>
                         )}
-                        <div class="text-sm text-zinc-400 dark:text-white/70">
+                        <div class="text-sm text-zinc-600 dark:text-white/70">
                           {expired && expiresStr ? (
                             <span>
                               <span class="sr-only">Expired: </span>

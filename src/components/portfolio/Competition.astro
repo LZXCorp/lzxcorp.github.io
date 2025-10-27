@@ -14,7 +14,7 @@ const COMPETITION = [
     obtained: "10-2025",
     accent: "rgb(255 90 0)",
     tags: [
-      "CTF", "Cloud Security", "Web Exploitation", "Reverse Engineering"
+      "CTF", "Cloud Security", "Web Exploitation", "Rev"
     ],
   },
   {
@@ -74,7 +74,7 @@ const COMPETITION = [
                           "aria-label": `Open ${comp.title} badge`,
                         }
                       : {})}
-                    class="group relative overflow-hidden rounded-3xl border border-white/10 bg-black/30 dark:bg-white/5 p-6 md:p-8 ring-1 ring-black/10 dark:ring-white/10 transition-all duration-300 hover:border-[var(--accent)]/50 hover:ring-[var(--accent)]/50 hover:shadow-[0_0_40px_-5px_var(--accent-blur)] flex flex-col md:flex-row gap-6 items-center"
+                    class="group relative overflow-hidden rounded-3xl border border-zinc-200/50 dark:border-white/10 bg-white/80 dark:bg-[var(--accent)]/5 backdrop-blur-sm p-6 md:p-8 ring-1 ring-zinc-200/50 dark:ring-white/10 transition-all duration-300 hover:border-[var(--accent)]/50 hover:ring-[var(--accent)]/50 hover:shadow-[0_0_40px_-5px_var(--accent-blur)] flex flex-col md:flex-row gap-6 items-center"
                     style={`--accent: ${comp.accent || "rgb(56 189 248)"}; --accent-blur: color-mix(in srgb, var(--accent) 60%, transparent); --accent-light: color-mix(in srgb, var(--accent) 30%, transparent);`}
                   >
                     <span
@@ -143,11 +143,11 @@ const COMPETITION = [
                         {comp.title}
                       </h3>
                       
-                      <p class="text-sm md:text-base font-medium text-zinc-700 dark:text-white/80 mb-1">
+                      <p class="text-sm md:text-base font-medium text-zinc-900 dark:text-white/80 mb-1">
                         {comp.issuer}
                       </p>
                       
-                      <p class="text-sm md:text-base text-zinc-600 dark:text-white/70 mb-4">
+                      <p class="text-sm md:text-base text-zinc-700 dark:text-white/70 mb-4">
                         {comp.description}
                       </p>
 
@@ -155,7 +155,7 @@ const COMPETITION = [
                         {comp.tags.map((tag) => (
                           <span
                             class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset transition-colors"
-                            style="background-color: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); ring-color: color-mix(in srgb, var(--accent) 30%, transparent);"
+                            style="background-color: color-mix(in srgb, var(--accent) 20%, transparent); color: var(--accent); ring-color: color-mix(in srgb, var(--accent) 40%, transparent);"
                           >
                             {tag}
                           </span>
@@ -163,7 +163,7 @@ const COMPETITION = [
                       </div>
 
                       {comp.obtained && (
-                        <div class="mt-4 flex items-center gap-2 text-xs text-zinc-600 dark:text-white/60 justify-center md:justify-start">
+                        <div class="mt-4 flex items-center gap-2 text-xs text-zinc-700 dark:text-white/60 justify-center md:justify-start">
                           <Icon name="calendar" class="w-4 h-4" />
                           <time datetime={comp.obtained}>
                             {new Date(comp.obtained.split('-').reverse().join('-')).toLocaleDateString('en-US', {
