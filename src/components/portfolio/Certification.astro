@@ -5,35 +5,53 @@ import { Icon } from "astro-icon/components";
 // badgelink and obtained are optional if NOT obtained yet
 // expires is optional if not applicable
 const CERTIFICATION = [
-  // {
-  //   title: "Certified Information Systems Auditor (CISA)",
-  //   issuer: "ISACA",
-  //   logo: "/images/logos/isaca.png",
-  //   badgeicon: "/images/cert/cisa.png",
-  //   badgelink: "",
-  //   obtained: "",
-  //   accent: "rgb(60 84 163)",
-  //   tags: [
-  //     "Theoretical",
-  //     "Auditing",
-  //     "Risk Management",
-  //     "Governance & Compliance",
-  //   ],
-  // },
-  // {
-  //   title: "Offensive Security Certified Professional (OSCP)",
-  //   issuer: "Offsec",
-  //   logo: "/images/logos/offsec.png",
-  //   badgeicon: "/images/cert/oscp.svg",
-  //   badgelink: "",
-  //   obtained: "",
-  //   accent: "rgb(255 90 0)",
-  //   tags: [
-  //     "Penetration Testing",
-  //     "Network Security",
-  //     "Exploitation"
-  //   ],
-  // },
+  {
+    title: "Certified Active Directory Pentesting Expert",
+    issuer: "HackTheBox",
+    logo: "/images/logos/htb.svg",
+    badgeicon: "/images/cert/cape.webp",
+    badgelink: "",
+    obtained: "",
+    accent: "rgb(231 61 180)",
+    tags: [
+      "Penetration Testing",
+      "Active Directory",
+      "Specialized",
+    ],
+    hidden: true,
+  },
+  {
+    title: "Certified Information Systems Auditor (CISA)",
+    issuer: "ISACA",
+    logo: "/images/logos/isaca.png",
+    badgeicon: "/images/cert/cisa.png",
+    badgelink: "",
+    obtained: "",
+    accent: "rgb(60 84 163)",
+    tags: [
+      "Theoretical",
+      "Auditing",
+      "Risk Management",
+      "Governance & Compliance",
+    ],
+    hidden: true,
+  },
+  {
+    title: "Offensive Security Certified Professional (OSCP)",
+    issuer: "Offsec",
+    logo: "/images/logos/offsec.png",
+    badgeicon: "/images/cert/oscp.svg",
+    badgelink: "",
+    obtained: "",
+    accent: "rgb(255 90 0)",
+    tags: [
+      "Penetration Testing",
+      "Network Security",
+      "Exploitation",
+      "Beginner",
+    ],
+    hidden: true,
+  },
   {
     title: "Certified Penetration Testing Specialist",
     issuer: "HackTheBox",
@@ -47,7 +65,23 @@ const CERTIFICATION = [
       "Network Security",
       "Web Attacks",
       "Active Directory",
+      "Intermediate",
     ],
+  },
+  {
+    title: "Azure Fundamentals",
+    issuer: "Microsoft",
+    logo: "/images/logos/microsoft.png",
+    badgeicon: "/images/cert/az900.png",
+    badgelink: "",
+    obtained: "",
+    accent: "rgb(0 140 255)",
+    tags: [
+      "Azure",
+      "Cloud Computing",
+      "Foundational",
+    ],
+    hidden: true,
   },
   {
     title: "Solutions Architect (Associate)",
@@ -62,18 +96,19 @@ const CERTIFICATION = [
       "Cloud Computing",
       "Cloud Architecture",
       "Infrastructure Design",
+      "Associate",
     ],
   },
   {
     title: "Certified Ethical Hacker",
     issuer: "EC-Council",
     logo: "/images/logos/eccouncil.png",
-    badgeicon: "/images/cert/ceh.png",
+    badgeicon: "/images/cert/ceh.webp",
     badgelink: "",
     obtained: "12-2024",
     expires: "01-2026",
     accent: "rgb(237 6 2)",
-    tags: ["Theoretical", "Networking", "PKI Architecture"],
+    tags: ["Theoretical", "Networking", "PKI Architecture", "Foundational"],
   },
   {
     title: "Certified Cloud Practitioner",
@@ -85,7 +120,7 @@ const CERTIFICATION = [
     obtained: "10-2024",
     expires: "10-2027",
     accent: "rgb(255 153 0)",
-    tags: ["AWS", "Cloud Computing"],
+    tags: ["AWS", "Cloud Computing", "Foundational"],
   },
 ];
 
@@ -111,6 +146,20 @@ const isExpired = (expires?: string) => {
       <Heading text="Technical" textGradient="Certifications" level={2} />
     </div>
 
+    <div class="mt-6 flex justify-center">
+      <button
+        id="toggleHiddenCerts"
+        class="toggle-hidden-btn inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-white/20 bg-white/80 dark:bg-zinc-800/80 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:border-zinc-500 dark:hover:border-white/40 hover:bg-zinc-100 dark:hover:bg-zinc-700 backdrop-blur-sm cursor-pointer group/btn"
+        aria-label="Toggle hidden certifications"
+      >
+        <span class="icon-wrapper">
+          <Icon name="eye-off" class="text-lg icon-default transition-opacity duration-200" />
+          <Icon name="eye" class="text-lg icon-hover absolute inset-0 opacity-0 transition-opacity duration-200" />
+        </span>
+        <span>Show Hidden</span>
+      </button>
+    </div>
+
     <div class="mt-10" aria-label="Professional certifications">
       <ul
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
@@ -124,8 +173,10 @@ const isExpired = (expires?: string) => {
               typeof cert.expires === "string" ? cert.expires.trim() : "";
             const expired = isExpired(expiresStr);
             const obtained = obtainedStr !== "";
+            const isHidden = cert.hidden === true;
+            const grayAccent = "rgb(156 163 175)"; // gray-400
             return (
-              <li class="h-full">
+              <li class={`h-full cert-item ${isHidden ? "hidden-cert" : ""}`} data-hidden={isHidden}>
                 <article
                   role="article"
                   aria-labelledby={`cert-title-${index}`}
@@ -140,8 +191,8 @@ const isExpired = (expires?: string) => {
                           "aria-label": `Open ${cert.title} badge`,
                         }
                       : {})}
-                    class="group relative h-full overflow-hidden rounded-2xl border border-zinc-200/50 dark:border-white/10 bg-white/80 dark:bg-[var(--accent)]/5 backdrop-blur-sm p-6 ring-1 ring-zinc-200/50 dark:ring-white/10 transition-all duration-300 hover:border-[var(--accent)]/50 hover:ring-[var(--accent)]/50 hover:shadow-[0_0_30px_-5px_var(--accent-blur)] flex flex-col"
-                    style={`--accent: ${cert.accent || "rgb(56 189 248)"}; --accent-blur: color-mix(in srgb, var(--accent) 60%, transparent); --accent-light: color-mix(in srgb, var(--accent) 30%, transparent);`}
+                    class="group relative h-full overflow-hidden rounded-2xl border border-zinc-200/50 dark:border-white/10 bg-white/80 dark:bg-[var(--accent)]/15 backdrop-blur-sm p-6 ring-1 ring-zinc-200/50 dark:ring-white/10 transition-all duration-300 hover:border-[var(--accent-real)]/50 hover:ring-[var(--accent-real)]/50 hover:shadow-[0_0_30px_-5px_var(--accent-blur)] hover:dark:bg-[var(--accent-real)]/15 flex flex-col"
+                    style={`--accent-real: ${cert.accent || "rgb(56 189 248)"}; --accent: ${isHidden ? grayAccent : cert.accent || "rgb(56 189 248)"}; --accent-blur: color-mix(in srgb, var(--accent-real) 60%, transparent); --accent-light: color-mix(in srgb, var(--accent) 30%, transparent);`}
                   >
                     <span
                       aria-hidden="true"
@@ -230,7 +281,7 @@ const isExpired = (expires?: string) => {
                         cert.tags.map((t) => (
                           <span
                             class="inline-flex items-center rounded-full border px-2 py-0.5 text-[0.7rem] font-medium leading-none transition-colors"
-                            style="border-color: color-mix(in srgb, var(--accent) 70%, transparent); color: var(--accent); background: color-mix(in srgb, var(--accent) 20%, transparent);"
+                            style={`border-color: color-mix(in srgb, ${isHidden ? "var(--accent-real)" : "var(--accent)"} 70%, transparent); color: ${isHidden ? "var(--accent-real)" : "var(--accent)"}; background: color-mix(in srgb, ${isHidden ? "var(--accent-real)" : "var(--accent)"} 20%, transparent);`}
                           >
                             {t}
                           </span>
@@ -254,6 +305,14 @@ const isExpired = (expires?: string) => {
                               class="pointer-events-none absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-emerald-300/40 to-transparent transition-transform duration-700 ease-out will-change-transform group-hover:translate-x-[120%]"
                             />
                             <span class="relative z-[1]">Completed</span>
+                          </span>
+                        ) : isHidden ? (
+                          <span class="relative inline-flex items-center rounded-full border border-gray-400 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-400/10 px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-gray-400/20 transition-colors group-hover:ring-gray-400/40 overflow-hidden">
+                            <span
+                              aria-hidden="true"
+                              class="pointer-events-none absolute inset-0 -translate-x-[120%] bg-gradient-to-r from-transparent via-gray-300/40 to-transparent transition-transform duration-700 ease-out will-change-transform group-hover:translate-x-[120%]"
+                            />
+                            <span class="relative z-[1]">Backlog</span>
                           </span>
                         ) : (
                           <span class="relative inline-flex items-center rounded-full border border-yellow-400 text-yellow-700 dark:text-yellow-300 bg-yellow-50 dark:bg-yellow-400/10 px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-yellow-400/20 transition-colors group-hover:ring-yellow-400/40 overflow-hidden">
@@ -283,7 +342,7 @@ const isExpired = (expires?: string) => {
                       {cert.badgelink && (
                         <span
                           class="text-sm font-medium group-hover:underline"
-                          style="color: var(--accent)"
+                          style={`color: ${isHidden ? "var(--accent-real)" : "var(--accent)"}`}
                         >
                           View badge
                         </span>
@@ -299,3 +358,54 @@ const isExpired = (expires?: string) => {
     </div>
   </div>
 </section>
+
+<style>
+  .hidden-cert {
+    display: none;
+  }
+
+  .hidden-cert.show {
+    display: block;
+  }
+
+  /* Smooth hover transition for accent color on hidden certs */
+  .hidden-cert .group:hover h3 {
+    color: var(--accent-real) !important;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleButton = document.getElementById('toggleHiddenCerts');
+    const hiddenCerts = document.querySelectorAll('.hidden-cert');
+    let isShowing = false;
+
+    toggleButton?.addEventListener('click', () => {
+      isShowing = !isShowing;
+      
+      hiddenCerts.forEach(cert => {
+        if (isShowing) {
+          cert.classList.add('show');
+        } else {
+          cert.classList.remove('show');
+        }
+      });
+
+      // Update button state and text
+      const text = toggleButton.querySelector('span:not(.icon-wrapper)');
+      
+      if (text) {
+        if (isShowing) {
+          toggleButton.classList.add('active');
+          text.textContent = 'Hide Hidden';
+        } else {
+          toggleButton.classList.remove('active');
+          text.textContent = 'Show Hidden';
+        }
+      }
+      
+      // Toggle button state for icon swap
+      toggleButton.classList.toggle('showing');
+    });
+  });
+</script>

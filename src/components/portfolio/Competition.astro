@@ -18,6 +18,34 @@ const COMPETITION = [
     ],
   },
   {
+    title: "GCTF 2024",
+    description: "Participated in the Gryphons CTF 2024 and completed around 20+ challenges.",
+    issuer: "Gryphons",
+    logo: "/images/logos/gryphons.png",
+    badgeicon: "https://api.badgr.io/public/assertions/BnYb7BBHS0OGznQWvLAFfw/image",
+    badgelink: "https://api.badgr.io/public/assertions/BnYb7BBHS0OGznQWvLAFfw",
+    obtained: "12-2024",
+    accent: "rgb(101 201 243)",
+    tags: [
+      "CTF", "Web Exploitation", "General Skills"
+    ],
+    hidden: true,
+  },
+  {
+    title: "YBN CTF 2024",
+    description: "Participated in the YBN CTF 2024 and completed around 20+ challenges.",
+    issuer: "YBN",
+    logo: "/images/logos/ybn.png",
+    badgeicon: "",
+    badgelink: "",
+    obtained: "11-2024",
+    accent: "rgb(255 255 255)",
+    tags: [
+      "CTF", "Cryptography", "Web Exploitation", "Forensics", "Rev", "Pwn"
+    ],
+    hidden: true,
+  },
+  {
     title: "Cyber Sports Challenge 2024",
     description: "Completed 5 Levels and placed 4th overall in the Invitational Category.",
     issuer: "Sentinel Programme",
@@ -29,6 +57,50 @@ const COMPETITION = [
     tags: [
       "CTF", "Network Analysis", "Rev"
     ],
+  },
+  {
+    title: "BlahajCTF 2024",
+    description: "This is the second CTF that I participated in. Completed over 30+ challenges but did not make it to the finals for the non-eligible category.",
+    issuer: "BlahajCTF",
+    logo: "/images/logos/blahaj.jpg",
+    badgeicon: "",
+    badgelink: "",
+    obtained: "11-2024",
+    accent: "rgb(123 169 208)",
+    tags: [
+      "CTF", "OSINT", "Cryptography", "Web Exploitation", "Forensics", "Rev", "Pwn"
+    ],
+    hidden: true,
+  },
+  {
+    title: "The InfoSecurity Challenge (TISC) 2024",
+    description: "Nearly a year after I entered the world of Cybersecurity, I decided for the first time to participate in a CTF. This was the first CTF that I ever participated in. Completed 1 / 12 challenges.",
+    issuer: "Centre for Strategic Infocomm Technologies (CSIT)",
+    logo: "/images/logos/csit-logo.png",
+    badgeicon: "https://badgr.com/public/assertions/LZXZ6BoISmaFSlNk0Ko12w/image",
+    badgelink: "https://badgr.com/public/assertions/LZXZ6BoISmaFSlNk0Ko12w",
+    obtained: "10-2024",
+    accent: "rgb(72 92 159)",
+    tags: [
+      "CTF", "OSINT", "Prompt Injection"
+    ],
+    hidden: true,
+  },
+  {
+    title: "Youth X Hack 2024",
+    description: "We are a group of 5 that developed 'UnityLink' that enables vulnerable groups to overcome language or physical barriers to access community networks, increasing and improving their social interactions. This is done by using algorithms to matchmake individuals based on their interest to events. It also facilities travel through volunteering and people while taking notes of their needs or difficulties. Scored a single placement behind the runner up team.",
+    issuer: "",
+    logo: "",
+    badgeicon: "/images/badges/yxh24.png",
+    badgelink: "",
+    obtained: "09-2024",
+    accent: "rgb(226 168 241)",
+    tags: [
+      "Hackathon",
+      "Total Defense",
+      "Algorithms"
+    ],
+    hidden: true,
   },
   // {
   //   title: "",
@@ -42,7 +114,7 @@ const COMPETITION = [
   //   tags: [
   //     "CTF",
   //   ],
-  // }
+  // },
 ]
 ---
 
@@ -53,13 +125,29 @@ const COMPETITION = [
       <Heading text="All" textGradient="Competitions" level={2} />
     </div>
 
-    <div class="relative max-md:mt-0 mt-8" aria-label="Competition achievements">
+    <div class="mt-6 flex justify-center">
+      <button
+        id="toggleHiddenComps"
+        class="toggle-hidden-btn inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-white/20 bg-white/80 dark:bg-zinc-800/80 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 transition-all hover:border-zinc-500 dark:hover:border-white/40 hover:bg-zinc-100 dark:hover:bg-zinc-700 backdrop-blur-sm cursor-pointer group/btn"
+        aria-label="Toggle hidden competitions"
+      >
+        <span class="icon-wrapper">
+          <Icon name="eye-off" class="text-lg icon-default transition-opacity duration-200" />
+          <Icon name="eye" class="text-lg icon-hover absolute inset-0 opacity-0 transition-opacity duration-200" />
+        </span>
+        <span>Show Hidden</span>
+      </button>
+    </div>
+
+    <div class="relative max-md:mt-0" aria-label="Competition achievements">
       <ol class="relative mt-10 space-y-6">
         {
           COMPETITION.map((comp, index) => {
             const CardTag = comp.badgelink ? "a" : "div";
+            const isHidden = comp.hidden === true;
+            const grayAccent = "rgb(156 163 175)"; // gray-400
             return (
-              <li>
+              <li class={`comp-item ${isHidden ? "hidden-comp" : ""}`} data-hidden={isHidden}>
                 <article
                   role="article"
                   aria-labelledby={`comp-title-${index}`}
@@ -74,8 +162,8 @@ const COMPETITION = [
                           "aria-label": `Open ${comp.title} badge`,
                         }
                       : {})}
-                    class="group relative overflow-hidden rounded-3xl border border-zinc-200/50 dark:border-white/10 bg-white/80 dark:bg-[var(--accent)]/5 backdrop-blur-sm p-6 md:p-8 ring-1 ring-zinc-200/50 dark:ring-white/10 transition-all duration-300 hover:border-[var(--accent)]/50 hover:ring-[var(--accent)]/50 hover:shadow-[0_0_40px_-5px_var(--accent-blur)] flex flex-col md:flex-row gap-6 items-center"
-                    style={`--accent: ${comp.accent || "rgb(56 189 248)"}; --accent-blur: color-mix(in srgb, var(--accent) 60%, transparent); --accent-light: color-mix(in srgb, var(--accent) 30%, transparent);`}
+                    class="group relative overflow-hidden rounded-3xl border border-zinc-200/50 dark:border-white/10 bg-white/80 dark:bg-[var(--accent)]/15 backdrop-blur-sm p-6 md:p-8 ring-1 ring-zinc-200/50 dark:ring-white/10 transition-all duration-300 hover:border-[var(--accent-real)]/50 hover:ring-[var(--accent-real)]/50 hover:shadow-[0_0_40px_-5px_var(--accent-blur)] hover:dark:bg-[var(--accent-real)]/15 flex flex-col md:flex-row gap-6 items-center"
+                    style={`--accent-real: ${comp.accent || "rgb(56 189 248)"}; --accent: ${isHidden ? grayAccent : comp.accent || "rgb(56 189 248)"}; --accent-blur: color-mix(in srgb, var(--accent-real) 60%, transparent); --accent-light: color-mix(in srgb, var(--accent) 30%, transparent);`}
                   >
                     <span
                       aria-hidden="true"
@@ -155,7 +243,7 @@ const COMPETITION = [
                         {comp.tags.map((tag) => (
                           <span
                             class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset transition-colors"
-                            style="background-color: color-mix(in srgb, var(--accent) 20%, transparent); color: var(--accent); ring-color: color-mix(in srgb, var(--accent) 40%, transparent);"
+                            style={`background-color: color-mix(in srgb, ${isHidden ? "var(--accent-real)" : "var(--accent)"} 20%, transparent); color: ${isHidden ? "var(--accent-real)" : "var(--accent)"}; ring-color: color-mix(in srgb, ${isHidden ? "var(--accent-real)" : "var(--accent)"} 40%, transparent);`}
                           >
                             {tag}
                           </span>
@@ -184,3 +272,54 @@ const COMPETITION = [
     </div>
   </div>
 </section>
+
+<style>
+  .hidden-comp {
+    display: none;
+  }
+
+  .hidden-comp.show {
+    display: block;
+  }
+
+  /* Smooth hover transition for accent color on hidden competitions */
+  .hidden-comp .group:hover h3 {
+    color: var(--accent-real) !important;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleButton = document.getElementById('toggleHiddenComps');
+    const hiddenComps = document.querySelectorAll('.hidden-comp');
+    let isShowing = false;
+
+    toggleButton?.addEventListener('click', () => {
+      isShowing = !isShowing;
+      
+      hiddenComps.forEach(comp => {
+        if (isShowing) {
+          comp.classList.add('show');
+        } else {
+          comp.classList.remove('show');
+        }
+      });
+
+      // Update button state and text
+      const text = toggleButton.querySelector('span:not(.icon-wrapper)');
+      
+      if (text) {
+        if (isShowing) {
+          toggleButton.classList.add('active');
+          text.textContent = 'Hide Hidden';
+        } else {
+          toggleButton.classList.remove('active');
+          text.textContent = 'Show Hidden';
+        }
+      }
+      
+      // Toggle button state for icon swap
+      toggleButton.classList.toggle('showing');
+    });
+  });
+</script>
