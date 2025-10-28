@@ -322,6 +322,9 @@ const COMPETITION = [
     let isMobile = window.innerWidth < 768;
     let observer: IntersectionObserver | null = null;
     let rafId: number | null = null;
+    let lastScrollTime = 0;
+    let scrollVelocity = 0;
+    let lastScrollY = window.scrollY;
 
     // Update mobile state on resize
     const updateMobileState = () => {
@@ -432,6 +435,12 @@ const COMPETITION = [
     const handleScrollEnd = () => {
       if (!isMobile) return;
 
+      // Don't auto-scroll if user was scrolling fast
+      if (Math.abs(scrollVelocity) > 5) {
+        scrollVelocity = 0;
+        return;
+      }
+
       const centerCard = findCenterCard();
       if (centerCard) {
         // Check if we're actually in the section
@@ -439,17 +448,19 @@ const COMPETITION = [
         const viewportCenter = window.innerHeight / 2;
         
         // Only auto-scroll if viewport center is within the section bounds
+        // and the card is not too far from center
         if (viewportCenter >= sectionRect.top && viewportCenter <= sectionRect.bottom) {
-          scrollToCenter(centerCard);
+          const cardRect = centerCard.getBoundingClientRect();
+          const cardCenter = cardRect.top + cardRect.height / 2;
+          const distanceFromCenter = Math.abs(viewportCenter - cardCenter);
           
-          // Keep the hover effect on the card (already applied during scroll)
-          setTimeout(() => {
-            if (!isUserScrolling) {
-              // Re-apply in case the card changed after auto-scroll
-              const finalCard = findCenterCard();
-              applyHoverEffect(finalCard);
-            }
-          }, 300);
+          // Only auto-scroll if card is slightly off-center (not too far)
+          if (distanceFromCenter > 20 && distanceFromCenter < window.innerHeight * 0.3) {
+            scrollToCenter(centerCard);
+          }
+          
+          // Apply hover effect without scrolling
+          applyHoverEffect(centerCard);
         }
       }
     };
@@ -457,17 +468,30 @@ const COMPETITION = [
     const onScroll = () => {
       if (!isMobile) return;
       
+      // Calculate scroll velocity
+      const currentTime = Date.now();
+      const currentScrollY = window.scrollY;
+      const timeDelta = currentTime - lastScrollTime;
+      
+      if (timeDelta > 0) {
+        scrollVelocity = Math.abs(currentScrollY - lastScrollY) / timeDelta;
+      }
+      
+      lastScrollTime = currentTime;
+      lastScrollY = currentScrollY;
       isUserScrolling = true;
       
-      // Use requestAnimationFrame for smooth updates
+      // Throttle hover effect updates during scroll
       if (rafId) {
         cancelAnimationFrame(rafId);
       }
       
       rafId = requestAnimationFrame(() => {
-        // Apply hover effect immediately to the card closest to center while scrolling
+        // Only apply hover effect, don't auto-scroll during active scrolling
         const centerCard = findCenterCard();
-        applyHoverEffect(centerCard);
+        if (centerCard) {
+          applyHoverEffect(centerCard);
+        }
         rafId = null;
       });
 
@@ -475,16 +499,22 @@ const COMPETITION = [
         clearTimeout(scrollTimeout);
       }
 
+      // Longer timeout to ensure user has stopped scrolling
       scrollTimeout = window.setTimeout(() => {
         isUserScrolling = false;
-        handleScrollEnd();
-      }, 150);
+        // Wait a bit longer before triggering auto-scroll
+        setTimeout(() => {
+          if (!isUserScrolling) {
+            handleScrollEnd();
+          }
+        }, 100);
+      }, 500); // Increased from 150ms to 500ms
     };
 
     const initMobileScrollBehavior = () => {
       if (!isMobile) return;
 
-      // Set up scroll listener on window for mobile
+      // Set up scroll listener on window for mobile with passive for better performance
       window.addEventListener('scroll', onScroll, { passive: true });
 
       // Set up intersection observer to detect when section is in view
@@ -495,37 +525,44 @@ const COMPETITION = [
               // Section is not visible, cleanup
               applyHoverEffect(null);
               isUserScrolling = false;
+              scrollVelocity = 0;
               if (scrollTimeout) {
                 clearTimeout(scrollTimeout);
                 scrollTimeout = null;
+              }
+              if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
               }
             } else if (!isUserScrolling) {
               // Section became visible and user is not scrolling
               // Apply effect to center card if exists
               setTimeout(() => {
-                const sectionRect = section.getBoundingClientRect();
-                const viewportCenter = window.innerHeight / 2;
-                
-                // Only apply if viewport center is within section
-                if (viewportCenter >= sectionRect.top && viewportCenter <= sectionRect.bottom) {
-                  const centerCard = findCenterCard();
-                  if (centerCard) {
-                    applyHoverEffect(centerCard);
+                if (!isUserScrolling) {
+                  const sectionRect = section.getBoundingClientRect();
+                  const viewportCenter = window.innerHeight / 2;
+                  
+                  // Only apply if viewport center is within section
+                  if (viewportCenter >= sectionRect.top && viewportCenter <= sectionRect.bottom) {
+                    const centerCard = findCenterCard();
+                    if (centerCard) {
+                      applyHoverEffect(centerCard);
+                    }
                   }
                 }
-              }, 100);
+              }, 200);
             }
           });
         },
         {
-          threshold: 0.2,
-          rootMargin: '-20% 0px -20% 0px'
+          threshold: [0, 0.1, 0.5],
+          rootMargin: '-10% 0px -10% 0px'
         }
       );
 
       observer.observe(section);
 
-      // Initial check
+      // Initial check - delayed to avoid conflicts
       setTimeout(() => {
         if (!isUserScrolling) {
           const centerCard = findCenterCard();
@@ -533,7 +570,7 @@ const COMPETITION = [
             applyHoverEffect(centerCard);
           }
         }
-      }, 500);
+      }, 800);
     };
 
     // Initialize if mobile
