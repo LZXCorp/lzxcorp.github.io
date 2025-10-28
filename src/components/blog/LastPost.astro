@@ -39,7 +39,9 @@ const imageAlt =
             src={image}
             alt={imageAlt}
             class="w-full h-auto"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
           />
         </a>
         <div

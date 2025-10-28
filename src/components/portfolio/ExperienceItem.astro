@@ -9,6 +9,7 @@
  * - date: string — Human-readable date range
  * - link?: string — Optional external URL; when provided, company and logo become a link
  * - logo?: string — Optional path to a transparent company logo image
+ * - index?: number — Optional index for loading optimization
  */
 interface Props {
   title: string;
@@ -17,9 +18,10 @@ interface Props {
   link?: string;
   date: string;
   logo?: string;
+  index?: number;
 }
 
-const { title, company, description, link, date, logo } = Astro.props as Props;
+const { title, company, description, link, date, logo, index = 0 } = Astro.props as Props;
 ---
 
 <div
@@ -40,7 +42,8 @@ const { title, company, description, link, date, logo } = Astro.props as Props;
               <img
                 src={logo}
                 alt={`${company} logo`}
-                loading="lazy"
+                loading={index < 2 ? "eager" : "lazy"}
+                fetchpriority={index < 2 ? "high" : "auto"}
                 decoding="async"
                 class="h-full w-full object-contain select-none [image-rendering:auto]"
               />
@@ -52,7 +55,8 @@ const { title, company, description, link, date, logo } = Astro.props as Props;
               <img
                 src={logo}
                 alt={`${company} logo`}
-                loading="lazy"
+                loading={index < 2 ? "eager" : "lazy"}
+                fetchpriority={index < 2 ? "high" : "auto"}
                 decoding="async"
                 class="h-full w-full object-contain select-none [image-rendering:auto]"
               />

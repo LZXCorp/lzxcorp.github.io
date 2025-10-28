@@ -26,8 +26,8 @@ const EXPERIENCE = [
 
 <section class="py-8 px-8 max-md:py-4 mb-4 scroll-m-16" id="experience">
   <div class="flex flex-col pt-8 max-w-4xl mx-auto">
-    <div class="flex gap-4 items-center justify-center">
-      <Icon class="text-3xl dark:text-white text-blacktext" name="briefcase" />
+    <div class="flex gap-4 items-center justify-center text-center flex-wrap">
+      <Icon class="text-3xl dark:text-white text-blacktext max-sm:text-2xl" name="briefcase" />
       <Heading text="Work" textGradient="Experience" level={2} />
     </div>
 
@@ -44,7 +44,7 @@ const EXPERIENCE = [
                   class="flex flex-col gap-2  text-zinc-00 dark:text-zinc-300 md:col-span-3"
                   aria-describedby={`experience-title-${index}`}
                 >
-                  <ExperienceItem {...experience} />
+                  <ExperienceItem {...experience} index={index} />
                 </div>
               </article>
             </li>

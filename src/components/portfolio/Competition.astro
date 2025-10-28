@@ -118,10 +118,10 @@ const COMPETITION = [
 ]
 ---
 
-<section class="py-8 px-8 max-md:py-4 mb-4 scroll-m-16" id="competitions">
-  <div class="flex flex-col pt-8 max-w-4xl mx-auto">
-    <div class="flex gap-4 items-center justify-center">
-      <Icon class="text-3xl dark:text-white text-blacktext" name="trophy" />
+<section class="py-8 px-8 max-md:py-4 mb-4 scroll-m-16 overflow-visible" id="competitions">
+  <div class="flex flex-col pt-8 max-w-4xl mx-auto overflow-visible">
+    <div class="flex gap-4 items-center justify-center text-center flex-wrap">
+      <Icon class="text-3xl dark:text-white text-blacktext max-sm:text-2xl" name="trophy" />
       <Heading text="All" textGradient="Competitions" level={2} />
     </div>
 
@@ -139,15 +139,15 @@ const COMPETITION = [
       </button>
     </div>
 
-    <div class="relative max-md:mt-0" aria-label="Competition achievements">
-      <ol class="relative mt-10 space-y-6">
+    <div class="relative max-md:mt-0 overflow-visible px-4 md:px-0" aria-label="Competition achievements">
+      <ol id="competitionsContainer" class="relative mt-10 space-y-6 overflow-visible">
         {
           COMPETITION.map((comp, index) => {
             const CardTag = comp.badgelink ? "a" : "div";
             const isHidden = comp.hidden === true;
             const grayAccent = "rgb(156 163 175)"; // gray-400
             return (
-              <li class={`comp-item ${isHidden ? "hidden-comp" : ""}`} data-hidden={isHidden}>
+              <li class={`comp-item ${isHidden ? "hidden-comp" : ""} snap-center overflow-visible`} data-hidden={isHidden}>
                 <article
                   role="article"
                   aria-labelledby={`comp-title-${index}`}
@@ -162,12 +162,13 @@ const COMPETITION = [
                           "aria-label": `Open ${comp.title} badge`,
                         }
                       : {})}
-                    class="group relative overflow-hidden rounded-3xl border border-zinc-200/50 dark:border-white/10 bg-white/80 dark:bg-[var(--accent)]/15 backdrop-blur-sm p-6 md:p-8 ring-1 ring-zinc-200/50 dark:ring-white/10 transition-all duration-300 hover:border-[var(--accent-real)]/50 hover:ring-[var(--accent-real)]/50 hover:shadow-[0_0_40px_-5px_var(--accent-blur)] hover:dark:bg-[var(--accent-real)]/15 flex flex-col md:flex-row gap-6 items-center"
+                    class="group relative rounded-3xl border border-zinc-200/50 dark:border-white/10 bg-white/80 dark:bg-[var(--accent)]/15 backdrop-blur-sm p-6 md:p-8 ring-1 ring-zinc-200/50 dark:ring-white/10 transition-all duration-300 hover:border-[var(--accent-real)]/50 hover:ring-[var(--accent-real)]/50 hover:shadow-[0_0_40px_-5px_var(--accent-blur)] hover:dark:bg-[var(--accent-real)]/15 flex flex-col md:flex-row gap-6 items-center overflow-visible"
                     style={`--accent-real: ${comp.accent || "rgb(56 189 248)"}; --accent: ${isHidden ? grayAccent : comp.accent || "rgb(56 189 248)"}; --accent-blur: color-mix(in srgb, var(--accent-real) 60%, transparent); --accent-light: color-mix(in srgb, var(--accent) 30%, transparent);`}
                   >
+                    <div class="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none -z-10">
                     <span
                       aria-hidden="true"
-                      class="pointer-events-none absolute inset-0 z-0 opacity-30"
+                      class="pointer-events-none absolute inset-0 z-0 opacity-30 group-hover:opacity-40 transition-opacity duration-300"
                     >
                       <span class="absolute inset-0 bg-gradient-to-br from-[var(--accent-light)] via-transparent to-transparent" />
                       <span class="absolute inset-0 bg-gradient-to-tl from-[var(--accent-light)] via-transparent to-transparent opacity-50" />
@@ -175,7 +176,7 @@ const COMPETITION = [
 
                     <span
                       aria-hidden="true"
-                      class="pointer-events-none absolute inset-0 z-0 opacity-20"
+                      class="pointer-events-none absolute inset-0 z-0 opacity-20 group-hover:opacity-60 transition-opacity duration-300"
                       style="background-image: radial-gradient(circle at 2px 2px, var(--accent) 1px, transparent 1px); background-size: 32px 32px;"
                     />
 
@@ -198,6 +199,7 @@ const COMPETITION = [
                       
                       <span class="absolute -bottom-24 -right-24 size-60 rounded-full bg-[radial-gradient(circle_at_center,_var(--accent-blur),_transparent_75%)] opacity-20 blur-3xl group-hover:size-76 group-hover:opacity-50 transition-all duration-700" />
                     </span>
+                    </div>
 
                     {(comp.badgeicon || comp.logo) && (
                       <div class="relative shrink-0 z-10">
@@ -206,7 +208,8 @@ const COMPETITION = [
                             src={comp.badgeicon || comp.logo}
                             alt={`${comp.title} ${comp.badgeicon ? 'badge' : 'logo'}`}
                             class="h-32 w-32 md:h-40 md:w-40 object-contain opacity-95 transition-transform duration-300 group-hover:scale-110 rounded-2xl"
-                            loading="lazy"
+                            loading={index < 2 ? "eager" : "lazy"}
+                            fetchpriority={index < 2 ? "high" : "auto"}
                             decoding="async"
                           />
                           {comp.badgeicon && comp.logo && (
@@ -214,7 +217,8 @@ const COMPETITION = [
                               src={comp.logo}
                               alt={`${comp.issuer} logo`}
                               class="absolute -bottom-2 -right-2 h-10 w-10 md:h-12 md:w-12 object-contain drop-shadow-lg bg-white/90 dark:bg-black/90 p-1.5 rounded-lg"
-                              loading="lazy"
+                              loading={index < 2 ? "eager" : "lazy"}
+                              fetchpriority={index < 2 ? "high" : "auto"}
                               decoding="async"
                             />
                           )}
@@ -273,21 +277,6 @@ const COMPETITION = [
   </div>
 </section>
 
-<style>
-  .hidden-comp {
-    display: none;
-  }
-
-  .hidden-comp.show {
-    display: block;
-  }
-
-  /* Smooth hover transition for accent color on hidden competitions */
-  .hidden-comp .group:hover h3 {
-    color: var(--accent-real) !important;
-  }
-</style>
-
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const toggleButton = document.getElementById('toggleHiddenComps');
@@ -321,5 +310,241 @@ const COMPETITION = [
       // Toggle button state for icon swap
       toggleButton.classList.toggle('showing');
     });
+
+    // Mobile scroll-to-center with auto-hover functionality
+    const container = document.getElementById('competitionsContainer');
+    const section = document.getElementById('competitions');
+    
+    if (!container || !section) return;
+
+    let scrollTimeout: number | null = null;
+    let isUserScrolling = false;
+    let isMobile = window.innerWidth < 768;
+    let observer: IntersectionObserver | null = null;
+    let rafId: number | null = null;
+
+    // Update mobile state on resize
+    const updateMobileState = () => {
+      const wasMobile = isMobile;
+      isMobile = window.innerWidth < 768;
+      
+      // If switching from desktop to mobile or vice versa, cleanup
+      if (wasMobile !== isMobile) {
+        cleanup();
+        if (isMobile) {
+          initMobileScrollBehavior();
+        }
+      }
+    };
+
+    const cleanup = () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = null;
+      }
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      // Remove scroll listener
+      window.removeEventListener('scroll', onScroll);
+      // Remove all mobile-active classes
+      document.querySelectorAll('.comp-item.mobile-active').forEach(item => {
+        item.classList.remove('mobile-active');
+      });
+    };
+
+    const findCenterCard = (): HTMLElement | null => {
+      const items = Array.from(container.querySelectorAll('.comp-item:not(.hidden-comp), .comp-item.show')) as HTMLElement[];
+      if (items.length === 0) return null;
+
+      // Use viewport center for detection
+      const viewportCenter = window.innerHeight / 2;
+
+      // Get bounds of first and last card
+      const firstCard = items[0];
+      const lastCard = items[items.length - 1];
+      const firstRect = firstCard.getBoundingClientRect();
+      const lastRect = lastCard.getBoundingClientRect();
+
+      // Check if viewport center is within the range of cards
+      const firstCardTop = firstRect.top;
+      const lastCardBottom = lastRect.bottom;
+
+      // If viewport center is not within the card list bounds, return null
+      if (viewportCenter < firstCardTop || viewportCenter > lastCardBottom) {
+        return null;
+      }
+
+      let closestItem: HTMLElement | null = null;
+      let closestDistance = Infinity;
+
+      items.forEach(item => {
+        const rect = item.getBoundingClientRect();
+        const itemCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(viewportCenter - itemCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestItem = item;
+        }
+      });
+
+      // Only return the card if it's reasonably close to center (within viewport)
+      if (closestItem && closestDistance < window.innerHeight * 0.4) {
+        return closestItem;
+      }
+
+      return null;
+    };
+
+    const scrollToCenter = (item: HTMLElement) => {
+      if (!item) return;
+      
+      const rect = item.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const itemCenter = rect.top + rect.height / 2;
+      const scrollOffset = itemCenter - viewportCenter;
+      
+      // Scroll the window, not the container
+      window.scrollBy({
+        top: scrollOffset,
+        behavior: 'smooth'
+      });
+    };
+
+    const applyHoverEffect = (item: HTMLElement | null) => {
+      // Remove hover effect from all items
+      document.querySelectorAll('.comp-item.mobile-active').forEach(el => {
+        el.classList.remove('mobile-active');
+      });
+
+      // Apply to the centered item
+      if (item) {
+        item.classList.add('mobile-active');
+      }
+    };
+
+    const handleScrollEnd = () => {
+      if (!isMobile) return;
+
+      const centerCard = findCenterCard();
+      if (centerCard) {
+        // Check if we're actually in the section
+        const sectionRect = section.getBoundingClientRect();
+        const viewportCenter = window.innerHeight / 2;
+        
+        // Only auto-scroll if viewport center is within the section bounds
+        if (viewportCenter >= sectionRect.top && viewportCenter <= sectionRect.bottom) {
+          scrollToCenter(centerCard);
+          
+          // Keep the hover effect on the card (already applied during scroll)
+          setTimeout(() => {
+            if (!isUserScrolling) {
+              // Re-apply in case the card changed after auto-scroll
+              const finalCard = findCenterCard();
+              applyHoverEffect(finalCard);
+            }
+          }, 300);
+        }
+      }
+    };
+
+    const onScroll = () => {
+      if (!isMobile) return;
+      
+      isUserScrolling = true;
+      
+      // Use requestAnimationFrame for smooth updates
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      
+      rafId = requestAnimationFrame(() => {
+        // Apply hover effect immediately to the card closest to center while scrolling
+        const centerCard = findCenterCard();
+        applyHoverEffect(centerCard);
+        rafId = null;
+      });
+
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+
+      scrollTimeout = window.setTimeout(() => {
+        isUserScrolling = false;
+        handleScrollEnd();
+      }, 150);
+    };
+
+    const initMobileScrollBehavior = () => {
+      if (!isMobile) return;
+
+      // Set up scroll listener on window for mobile
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Set up intersection observer to detect when section is in view
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+              // Section is not visible, cleanup
+              applyHoverEffect(null);
+              isUserScrolling = false;
+              if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = null;
+              }
+            } else if (!isUserScrolling) {
+              // Section became visible and user is not scrolling
+              // Apply effect to center card if exists
+              setTimeout(() => {
+                const sectionRect = section.getBoundingClientRect();
+                const viewportCenter = window.innerHeight / 2;
+                
+                // Only apply if viewport center is within section
+                if (viewportCenter >= sectionRect.top && viewportCenter <= sectionRect.bottom) {
+                  const centerCard = findCenterCard();
+                  if (centerCard) {
+                    applyHoverEffect(centerCard);
+                  }
+                }
+              }, 100);
+            }
+          });
+        },
+        {
+          threshold: 0.2,
+          rootMargin: '-20% 0px -20% 0px'
+        }
+      );
+
+      observer.observe(section);
+
+      // Initial check
+      setTimeout(() => {
+        if (!isUserScrolling) {
+          const centerCard = findCenterCard();
+          if (centerCard) {
+            applyHoverEffect(centerCard);
+          }
+        }
+      }, 500);
+    };
+
+    // Initialize if mobile
+    if (isMobile) {
+      initMobileScrollBehavior();
+    }
+
+    // Handle resize
+    window.addEventListener('resize', updateMobileState);
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', cleanup);
   });
 </script>

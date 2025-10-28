@@ -28,8 +28,8 @@ allPosts.sort(
   id="projects"
 >
   <div class="mx-auto max-w-7xl py-8">
-    <div class="flex gap-4 items-center justify-center text-center">
-      <Icon class="text-3xl dark:text-white text-blacktext" name="code" />
+    <div class="flex gap-4 items-center justify-center text-center flex-wrap">
+      <Icon class="text-3xl dark:text-white text-blacktext max-sm:text-2xl" name="code" />
       <Heading text="Projects" textGradient="Completed" level={2} />
     </div>
     <slot />
@@ -40,7 +40,7 @@ allPosts.sort(
     class="mx-auto max-w-7xl grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-5 p-2 py-4 max-h-[150vh] overflow-hidden transition-[max-height] duration-500 ease-in-out"
   >
     {
-      allPosts.map((post) => (
+      allPosts.map((post, index) => (
         <Project
           url={post.url}
           title={post.frontmatter.title}
@@ -48,6 +48,7 @@ allPosts.sort(
           date={post.frontmatter.pubDate}
           languages={post.frontmatter.languages}
           image={post.frontmatter.image}
+          index={index}
         />
       ))
     }

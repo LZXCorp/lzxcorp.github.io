@@ -44,6 +44,9 @@ const { frontmatter } = Astro.props;
               class="w-full rounded-xl"
               src={frontmatter.image.url}
               alt={frontmatter.image.alt || "Article image"}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
             />
           )
         }

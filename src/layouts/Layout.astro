@@ -64,6 +64,9 @@ const twitterimage = `${siteUrl}${ogimage.url}`;
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
     
+    <!-- Preload critical images for faster loading -->
+    <link rel="preload" as="image" href="/images/lzx.png" fetchpriority="high" />
+  
   </head>
   <body class="overflow-x-hidden">
     <SpeedInsights/>
