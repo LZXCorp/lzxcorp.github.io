@@ -3,11 +3,11 @@ import Tag from "../ui/Tag.astro";
 import ReadMore from "../ui/ReadMore.astro";
 import Capsule from "../ui/Capsule.astro";
 import DatePub from "./DatePub.astro";
+import { Icon } from "astro-icon/components";
 
 const postModules = import.meta.glob("../../pages/blog/posts/*.md", { eager: true });
 const allPosts = Object.values(postModules) as any[];
 
-// Get the latest post using reduce
 const latestPost = allPosts.reduce((latest, current) => {
   const latestDate = new Date(latest.frontmatter.pubDate).getTime();
   const currentDate = new Date(current.frontmatter.pubDate).getTime();
@@ -25,11 +25,12 @@ const imageAlt =
   latestPost && (
     <div
       style={{ backgroundImage: `url(${image})` }}
-      class="h-full hover:shadow-[0_20px_50px_rgba(244,63,94,0.25)] flex flex-col overflow-hidden rounded-2xl bg-linear-to-br bg-center bg-cover transition-all ease-in-out duration-200"
+      class="group h-full hover:shadow-[0_20px_50px_rgba(244,63,94,0.25)] flex flex-col overflow-hidden rounded-2xl bg-linear-to-br bg-center bg-cover transition-all ease-in-out duration-200 relative"
       role="article"
       aria-labelledby="post-title"
     >
-      <article class="h-full flex flex-col justify-between max-sm:bg-zinc-900 max-sm:relative sm:bg-linear-to-t from-black/95 from-25% to-transparent max-sm:from-60% p-8 max-md:p-6 max-sm:mp-0 max-sm:p-0">
+      <article class="h-full flex flex-col justify-between max-sm:bg-zinc-900 max-sm:relative sm:bg-linear-to-t from-black/95 from-25% to-transparent max-sm:from-60% p-8 max-md:p-6 max-sm:p-0">
+        {/* Mobile image */}
         <a
           href={latestPost.url}
           class="sm:hidden relative top-0 left-0 w-full h-auto -z-0"
@@ -44,23 +45,35 @@ const imageAlt =
             decoding="async"
           />
         </a>
-        <div
-          class="w-full flex pb-5 gap-2 flex-wrap justify-end z-10 max-sm:px-6 max-sm:pt-6"
-          role="list"
-          aria-label="Programming languages"
-        >
-          {languages.map((language: unknown) => (
-            <Capsule lang={language?.toString() || ""} />
-          ))}
+
+        {/* Top bar */}
+        <div class="w-full flex justify-between items-start gap-3 z-10 max-sm:px-6 max-sm:pt-6">
+          <div class="flex items-center gap-2 px-3 py-1.5 bg-mint-500/90 backdrop-blur-sm rounded-lg text-white text-xs font-bold uppercase tracking-widest">
+            <Icon name="crosshair" class="size-3" />
+            <span>Latest Intel</span>
+          </div>
+          <div
+            class="flex pb-5 gap-2 flex-wrap justify-end"
+            role="list"
+            aria-label="Programming languages"
+          >
+            {languages.map((language: unknown) => (
+              <Capsule lang={language?.toString() || ""} />
+            ))}
+          </div>
         </div>
 
+        {/* Post content */}
         <a
           href={latestPost.url}
-          class="text-mint-50 gap-3 h-full flex items-end max-sm:px-6  rounded-lg transition-all"
+          class="text-mint-50 gap-3 h-full flex items-end max-sm:px-6 rounded-lg transition-all"
           aria-label={`Read article: ${latestPost.frontmatter.title}`}
         >
           <div class="gap-3 flex flex-col justify-end drop-shadow-[1px_6px_1px_rgba(0,0,0,0.3)]">
-            <DatePub date={latestPost.frontmatter.pubDate} class="text-mint-50" />
+            <div class="flex items-center gap-2">
+              <Icon name="terminal" class="size-3 text-mint-400/80" />
+              <DatePub date={latestPost.frontmatter.pubDate} class="text-mint-50" />
+            </div>
             <h2
               id="post-title"
               class="text-4xl max-xl:text-3xl max-sm:text-2xl font-bold"
@@ -71,6 +84,7 @@ const imageAlt =
           </div>
         </a>
 
+        {/* Tags */}
         <div
           class="gap-2 mt-3 justify-start items-center flex flex-row flex-wrap max-sm:px-6 max-sm:pb-6"
           role="list"
@@ -81,6 +95,9 @@ const imageAlt =
           ))}
         </div>
       </article>
+
+      {/* Subtle scan line overlay on hover */}
+      <div class="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[repeating-linear-gradient(0deg,transparent,transparent_4px,rgba(239,68,68,0.015)_4px,rgba(239,68,68,0.015)_8px)]" />
     </div>
   )
 }

@@ -2,17 +2,18 @@
 import Layout from "../../../layouts/Layout.astro";
 import Tags from "../../../components/blog/Tags.astro";
 import Heading from "../../../components/ui/Heading.astro";
+import { Icon } from "astro-icon/components";
 
 const pageTitle = "Tags";
-
-
-
 ---
 
-<Layout pageTitle={pageTitle} >
-  <section class="py-8">
-    <div class="flex flex-col gap-8 max-w-3xl mx-auto">
-      <Heading text="Tags"  />
+<Layout pageTitle={pageTitle}>
+  <section class="py-8 px-8 max-sm:px-4">
+    <div class="flex flex-col gap-6 max-w-3xl mx-auto">
+      <div class="flex items-center gap-3 justify-center">
+        <Icon name="shield-lock" class="size-5 text-mint-500" />
+        <Heading text="Tags" />
+      </div>
       <Tags variant="vertical" />
     </div>
   </section>

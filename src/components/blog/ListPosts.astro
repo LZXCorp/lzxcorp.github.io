@@ -1,8 +1,8 @@
 ---
 import BlogPost from "./BlogPost.astro";
 import Heading from "../ui/Heading.astro";
+import { Icon } from "astro-icon/components";
 
-// Prop to determine whether to exclude the latest post or a specific post
 export interface Props {
   excludeLatest?: boolean;
   currentPostUrl?: string;
@@ -13,31 +13,25 @@ const { excludeLatest = false, currentPostUrl = "", all = false } = Astro.props;
 
 const postModules = import.meta.glob("../../pages/blog/posts/*.md", { eager: true });
 const allPosts = Object.values(postModules) as any[];
-// Sort by date in descending order (newest first)
 allPosts.sort((a, b) => {
   const dateA = new Date(a.frontmatter.pubDate).getTime();
   const dateB = new Date(b.frontmatter.pubDate).getTime();
   return dateB - dateA;
 });
 
-// Filter posts according to props
 let postsToShow = allPosts;
 
 if (currentPostUrl) {
-  // Exclude current post if its URL is provided
   postsToShow = postsToShow.filter((post) => {
-    if (!post.url) return false; // If no URL, keep the post
-    // Normalize URLs for comparison
-    const normalizedPostUrl = post.url.replace(/\/$/, ""); // Remove trailing slash if exists
-    const normalizedCurrentUrl = currentPostUrl.replace(/\/$/, ""); // Remove trailing slash if exists
+    if (!post.url) return false;
+    const normalizedPostUrl = post.url.replace(/\/$/, "");
+    const normalizedCurrentUrl = currentPostUrl.replace(/\/$/, "");
     return normalizedPostUrl !== normalizedCurrentUrl;
   });
 } else if (excludeLatest) {
-  // If no specific URL but want to exclude the latest
   postsToShow = postsToShow.slice(1);
 }
 
-// Limit to 4 posts if all is false
 if (!all) {
   postsToShow = postsToShow.slice(0, 4);
 }
@@ -49,6 +43,7 @@ if (!all) {
   {
     all && (
       <div class="flex gap-4 pb-6 items-center text-center justify-center">
+        <Icon name="scan" class="size-5 text-mint-500" />
         <Heading text="All" textGradient="Posts" level={2} />
       </div>
     )
@@ -73,9 +68,11 @@ if (!all) {
       <div id="morePosts" class="w-full flex justify-center text-center my-12">
         <a
           href="/blog/posts/"
-          class="font-bold cursor-pointer text-mint-400 dark:text-mint-100 hover:text-mint-500 dark:hover:text-mint-300 transition-all"
+          class="group inline-flex items-center gap-2 font-bold cursor-pointer text-mint-400 dark:text-mint-100 hover:text-mint-500 dark:hover:text-mint-300 transition-all"
         >
-          View all posts...
+          <Icon name="terminal" class="size-3.5 text-mint-500/50 group-hover:text-mint-500 transition-colors" />
+          <span>View all posts</span>
+          <Icon name="arrow-left" class="size-3.5 rotate-180 group-hover:translate-x-1 transition-transform duration-300" />
         </a>
       </div>
     )

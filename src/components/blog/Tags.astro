@@ -1,5 +1,6 @@
 ---
 import Tag from "../ui/Tag.astro";
+import { Icon } from "astro-icon/components";
 import type { MarkdownInstance } from 'astro';
 
 interface Frontmatter {
@@ -13,19 +14,23 @@ const tags = [...new Set(allPosts.map((post) => post.frontmatter.tags).flat())];
 type VariantType = "default" | "vertical" | "compact";
 const { variant = "default" } = Astro.props as { variant?: VariantType };
 
-// Common base classes
 const baseClasses = "max-w-7xl";
 
-// Variant-specific classes
 const variantClasses: Record<VariantType, string> = {
-    default: "max-lg:px-8 py-8 max-md:py-4 flex-wrap mx-auto gap-4 max-sm:gap-3 justify-center items-center flex flex-row",
+    default: "max-lg:px-8 py-4 max-md:py-4 flex-wrap mx-auto gap-3 max-sm:gap-2 justify-center items-center flex flex-row",
     vertical: "gap-6 justify-start items-start flex flex-col",
     compact: "flex-wrap mx-auto gap-2 max-sm:gap-3 justify-start flex flex-row"
 };
 
-// Combine base classes with variant-specific classes
 const classes = `${baseClasses} ${variantClasses[variant]}`;
 ---
+
+{variant === "default" && (
+    <div class="flex items-center justify-center gap-2 pt-6 pb-0 max-w-7xl mx-auto">
+        <Icon name="shield-lock" class="size-3.5 text-mint-500/70" />
+        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Classifications</span>
+    </div>
+)}
 
 <div id="tags" class={classes}>
     {tags.map((tag) => <Tag tag={tag}></Tag>)}

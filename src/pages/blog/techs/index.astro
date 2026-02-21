@@ -2,6 +2,7 @@
 import Layout from "../../../layouts/Layout.astro";
 import Languages from "../../../components/blog/Languages.astro";
 import Heading from "../../../components/ui/Heading.astro";
+import { Icon } from "astro-icon/components";
 import type { MarkdownInstance } from 'astro';
 
 interface Frontmatter {
@@ -12,7 +13,7 @@ interface Frontmatter {
     image: unknown;
 }
 
-const pageTitle = "Technologies"; // Fixed: Title was "Languages" but heading shows "Technologies"
+const pageTitle = "Technologies";
 const postModules = import.meta.glob<MarkdownInstance<Frontmatter>>("../posts/*.md", { eager: true });
 const allPosts: MarkdownInstance<Frontmatter>[] = Object.values(postModules);
 const languages = [
@@ -21,10 +22,13 @@ const languages = [
 ---
 
 <Layout pageTitle={pageTitle}>
-    <section class="py-8">
-        <div class="flex flex-col gap-8 max-w-3xl mx-auto">
-            <Heading text="Technologies" />
-            <Languages variant="vertical" languages={languages} /> <!-- Fixed: Missing languages prop -->
+    <section class="py-8 px-8 max-sm:px-4">
+        <div class="flex flex-col gap-6 max-w-3xl mx-auto">
+            <div class="flex items-center gap-3 justify-center">
+                <Icon name="code" class="size-5 text-mint-500" />
+                <Heading text="Technologies" />
+            </div>
+            <Languages variant="vertical" languages={languages} />
         </div>
     </section>
 </Layout>

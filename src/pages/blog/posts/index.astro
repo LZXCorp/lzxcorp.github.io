@@ -1,20 +1,20 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
-import Hero from "../../../components/blog/Hero.astro";
 import Tags from "../../../components/blog/Tags.astro";
 import ListPosts from "../../../components/blog/ListPosts.astro";
+import Heading from "../../../components/ui/Heading.astro";
+import Share from "../../../components/ui/Share.astro";
+import Languages from "../../../components/blog/Languages.astro";
+import { Icon } from "astro-icon/components";
+
 const pageTitle = "LZX Blog";
 const description = "A technical blog by LZX covering on Cybersecurity, Homelabbing and Technology.";
-const ogimage ={
+const ogimage = {
     url: "/images/lzx_banner.png",
     alt: "Default image of LZX Blog"
 };
 const currentUrl = `${Astro.site}${Astro.url.pathname}`;
 const tweetText = encodeURIComponent(`"${pageTitle}"`);
-import Heading from "../../../components/ui/Heading.astro";
-import Share from "../../../components/ui/Share.astro";
-
-import Languages from "../../../components/blog/Languages.astro";
 ---
 
 <Layout pageTitle={pageTitle} description={description} ogimage={ogimage}>
@@ -31,7 +31,10 @@ import Languages from "../../../components/blog/Languages.astro";
           class="bg-white dark:bg-transparent w-full mt-0 rounded-2xl dark:border-0 border border-neutral-100 top-14 px-6 pt-8 pb-12"
         >
           <div class="flex flex-col gap-4 pl-0">
-            <Heading textGradient="Categories" />
+            <div class="flex items-center gap-2">
+              <Icon name="shield-lock" class="size-4 text-mint-500" />
+              <Heading textGradient="Categories" />
+            </div>
             <Tags variant="compact" />
           </div>
         </div>
@@ -40,7 +43,10 @@ import Languages from "../../../components/blog/Languages.astro";
           class="bg-white dark:bg-transparent w-full mt-8 rounded-2xl dark:border-0 border border-neutral-100 top-14 px-6 pt-8 pb-12"
         >
           <div class="flex flex-col gap-4 pl-0">
-            <Heading textGradient="Technologies" level={2} />
+            <div class="flex items-center gap-2">
+              <Icon name="code" class="size-4 text-mint-500" />
+              <Heading textGradient="Technologies" level={2} />
+            </div>
             <Languages level={2} />
           </div>
         </div>
@@ -49,6 +55,5 @@ import Languages from "../../../components/blog/Languages.astro";
         </div>
       </div>
     </div>
-</div>
-
+  </div>
 </Layout>

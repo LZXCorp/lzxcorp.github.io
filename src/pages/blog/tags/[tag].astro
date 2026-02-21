@@ -2,6 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import BlogPost from '../../../components/blog/BlogPost.astro';
 import Heading from '../../../components/ui/Heading.astro';
+import { Icon } from "astro-icon/components";
 
 export async function getStaticPaths() {
     const postModules = import.meta.glob("../posts/*.md", { eager: true });
@@ -26,17 +27,18 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<Layout pageTitle={tag}  >
-    <section class="py-8">
-        <div class="flex flex-col gap-8 max-w-4xl mx-auto">
-            <Heading text="Posts about" textGradient={tag}/>
+<Layout pageTitle={tag}>
+    <section class="py-8 px-8 max-sm:px-4">
+        <div class="flex flex-col gap-6 max-w-4xl mx-auto">
+            <div class="flex items-center gap-3 justify-center">
+                <Icon name="crosshair" class="size-5 text-mint-500" />
+                <Heading text="Posts about" textGradient={tag} />
+            </div>
             {
                 posts.map((post) => (
-                    <BlogPost url={post.url} title={post.frontmatter.title} date={post.frontmatter.pubDate } tags={post.frontmatter.tags }  languages={post.frontmatter.languages } image={post.frontmatter.image } />
+                    <BlogPost url={post.url} title={post.frontmatter.title} date={post.frontmatter.pubDate} tags={post.frontmatter.tags} languages={post.frontmatter.languages} image={post.frontmatter.image} />
                 ))
             }
         </div>
     </section>
-
 </Layout>
-
