@@ -1,13 +1,13 @@
 ---
-layout:  /src/layouts/ProjectLayout.astro
-title: 'It''s Homelabbing Time!'
+layout: /src/layouts/ProjectLayout.astro
+title: "It's Homelabbing Time!"
 pubDate: 2025-10-22
-description: 'Creating a homelab to automate processes and keeping my full autonomy from the Cloud!'
+description: "Creating a homelab to automate processes and keeping my full autonomy from the Cloud!"
 languages: []
 image:
   url: "/images/projects/homelab.png"
   alt: "Home Lab Image"
---- 
+---
 
 After 2 years of doing Smart Home related operations, I realized that the Raspberry Pi couldn't handle my operational needs anymore. That is when I started pivoting towards a homelab setup.
 
@@ -22,7 +22,7 @@ The NAS server hosts various Quality of Life (QoL) applications for automations,
 
 ## 🖧 Infrastructure
 
-*Coming Soon*
+_Coming Soon_
 
 ## 🔮 Future Plans
 

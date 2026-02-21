@@ -9,8 +9,8 @@
 // image: https://obsidian.md/images/banner.png
 // ```
 
-import { visit } from 'unist-util-visit';
-import YAML from 'yaml';
+import { visit } from "unist-util-visit";
+import YAML from "yaml";
 
 /**
  * @typedef {import('mdast').Root} Root
@@ -22,9 +22,9 @@ import YAML from 'yaml';
  * @param {string | undefined} val
  */
 function normalizeObsidianLink(val) {
-  if (!val || typeof val !== 'string') return val;
+  if (!val || typeof val !== "string") return val;
   const trimmed = val.trim();
-  if (trimmed.startsWith('[[') && trimmed.endsWith(']]')) {
+  if (trimmed.startsWith("[[") && trimmed.endsWith("]]")) {
     return trimmed.slice(2, -2).trim();
   }
   return val;
@@ -38,7 +38,7 @@ function getHost(url) {
   try {
     return new URL(url).host;
   } catch {
-    return '';
+    return "";
   }
 }
 
@@ -48,10 +48,10 @@ function getHost(url) {
  */
 function escAttr(s) {
   return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 /**
@@ -60,9 +60,9 @@ function escAttr(s) {
  */
 function escText(s) {
   return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 /**
@@ -71,27 +71,27 @@ function escText(s) {
  */
 export default function remarkCardlink() {
   return (tree) => {
-    visit(tree, 'code', (node, index, parent) => {
-      if (!parent || node.lang !== 'cardlink') return;
+    visit(tree, "code", (node, index, parent) => {
+      if (!parent || node.lang !== "cardlink") return;
 
       // Parse YAML from the code block
       /** @type {{url?: string, title?: string, description?: string, host?: string, favicon?: string, image?: string}} */
       let data = {};
       try {
-        data = YAML.parse(node.value || '') || {};
+        data = YAML.parse(node.value || "") || {};
       } catch (e) {
         // If YAML fails to parse, leave node unchanged
         return;
       }
 
-      const url = (data.url || '').trim();
+      const url = (data.url || "").trim();
       if (!url) return; // require url at minimum
 
       const title = (data.title || url).toString();
-      const description = (data.description || '').toString();
+      const description = (data.description || "").toString();
       const host = (data.host || getHost(url)).toString();
-      const image = normalizeObsidianLink(data.image || '');
-      let favicon = normalizeObsidianLink(data.favicon || '');
+      const image = normalizeObsidianLink(data.image || "");
+      let favicon = normalizeObsidianLink(data.favicon || "");
       if (!favicon && host) {
         favicon = `https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=64`;
       }
@@ -100,19 +100,20 @@ export default function remarkCardlink() {
       // Note: do not rely on Tailwind utility classes in runtime-generated HTML.
       const imgHtml = image
         ? `<div class="cardlink__thumb" style="background-image:url('${escAttr(image)}');"></div>`
-        : '';
+        : "";
 
       const faviconHtml = favicon
-        ? `<img class="cardlink__favicon" src="${escAttr(favicon)}" alt="${escAttr(host || 'favicon')}" loading="lazy" decoding="async"/>`
-        : '';
+        ? `<img class="cardlink__favicon" src="${escAttr(favicon)}" alt="${escAttr(host || "favicon")}" loading="lazy" decoding="async"/>`
+        : "";
 
-      const metaHtml = host || favicon
-        ? `<div class="cardlink__meta">${faviconHtml}${host ? `<span class="cardlink__host">${escText(host)}</span>` : ''}</div>`
-        : '';
+      const metaHtml =
+        host || favicon
+          ? `<div class="cardlink__meta">${faviconHtml}${host ? `<span class="cardlink__host">${escText(host)}</span>` : ""}</div>`
+          : "";
 
       const descHtml = description
         ? `<p class="cardlink__desc">${escText(description)}</p>`
-        : '';
+        : "";
 
       const html = `
 <div class="cardlink no-toc" data-no-toc>
@@ -127,7 +128,7 @@ export default function remarkCardlink() {
 </div>`;
 
       parent.children.splice(index, 1, {
-        type: 'html',
+        type: "html",
         value: html,
       });
     });

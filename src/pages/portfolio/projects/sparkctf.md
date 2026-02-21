@@ -1,8 +1,8 @@
 ---
-layout:  /src/layouts/ProjectLayout.astro
-title: 'SparkCTF - For Students by Students'
+layout: /src/layouts/ProjectLayout.astro
+title: "SparkCTF - For Students by Students"
 pubDate: 2025-10-21
-description: 'Hosting the first ever CTF in Temasek Polytechnic!'
+description: "Hosting the first ever CTF in Temasek Polytechnic!"
 languages: []
 image:
   url: "/images/projects/sparkctf_banner.png"
@@ -24,6 +24,7 @@ This CTF was initiated through the **Cybersecurity and Digital Forensics Student
 ![](../../../assets/sparkctf/organizers.jpg)
 
 Their professional socials are linked below:
+
 - **Organizer:** [Justin How](https://www.linkedin.com/in/justin-how-291155241/)
 - **Organizer:** [Gavin Tan](https://www.linkedin.com/in/gavintjh/)
 - **Advisor:** [Sayed Hamzah](https://www.linkedin.com/in/sayedhamzah/)
@@ -34,13 +35,13 @@ The 2nd iteration of SparkCTF presents both new obstacles and issues that need t
 
 1. **Manual Infrastructure Setup**
 
-    Setting up the infrastructure from scratch over and over again is a painstaking process which wastes both time and the ever-previous DigitalOcean cloud money. The solution that we came up with was to utilize **Infrastructure as Code (IaC)** tooling such as Terraform and Ansible to automate the provisioning of cloud resources and the setting up of the virtual cloud instances with the relavent CTFd and service-based challenges. This reduces both the workload, maintenance and the overall cost of setting up the infrastructure.
+   Setting up the infrastructure from scratch over and over again is a painstaking process which wastes both time and the ever-previous DigitalOcean cloud money. The solution that we came up with was to utilize **Infrastructure as Code (IaC)** tooling such as Terraform and Ansible to automate the provisioning of cloud resources and the setting up of the virtual cloud instances with the relavent CTFd and service-based challenges. This reduces both the workload, maintenance and the overall cost of setting up the infrastructure.
 
 2. **Service Downtime**
 
-    Previously, there was no way of knowing when a service-based challenge goes down unless manually checked or when a ticket brings our attention to it. To solve this, from SparkCTF 2.0 onwards we introduced the **Prometheus and Grafana stack** to have a **centralized dashboard** showing all running services and their health and Prometheus Alerting for Discord Webhook alerts. It will **immediately alert** our team to fix the service in the shortest time possible, **reducing downtime** and a better overall experience for the participants.
+   Previously, there was no way of knowing when a service-based challenge goes down unless manually checked or when a ticket brings our attention to it. To solve this, from SparkCTF 2.0 onwards we introduced the **Prometheus and Grafana stack** to have a **centralized dashboard** showing all running services and their health and Prometheus Alerting for Discord Webhook alerts. It will **immediately alert** our team to fix the service in the shortest time possible, **reducing downtime** and a better overall experience for the participants.
 
-    In the future, we will be making use of a container orchestration tool for **automated deployments and self-healing** for service-based challenges. This will be implemented as part of the **SparkCTF 2.0 Experiential Track** and to be fully implemented during SparkCTF 3.0
+   In the future, we will be making use of a container orchestration tool for **automated deployments and self-healing** for service-based challenges. This will be implemented as part of the **SparkCTF 2.0 Experiential Track** and to be fully implemented during SparkCTF 3.0
 
 ## First Iteration of SparkCTF
 
@@ -51,6 +52,7 @@ The 2nd iteration of SparkCTF presents both new obstacles and issues that need t
 ![](../../../assets/sparkctf/people_banner.png)
 
 Their professional socials are linked below:
+
 - **Organizer:** [Justin How](https://www.linkedin.com/in/justin-how-291155241/)
 - **Organizer:** [Gavin Tan](https://www.linkedin.com/in/gavintjh/)
 - **Advisor:** [Sayed Hamzah](https://www.linkedin.com/in/sayedhamzah/)
@@ -62,15 +64,15 @@ There were several obstacles that my team had to overcome to make the first Spar
 
 1. **Creating Challenges**
 
-    Our small team of 4 had to create over 60 challenges within a 2 month timeframe. We also did not have the resources to outsource challenge creation. This was eventually solved thanks to our co-organizers for also contributing challenges for the CTF.
+   Our small team of 4 had to create over 60 challenges within a 2 month timeframe. We also did not have the resources to outsource challenge creation. This was eventually solved thanks to our co-organizers for also contributing challenges for the CTF.
 
 2. **Infrastructure**
 
-    Funnily enough, the infrastructure wasn't an issue. Rather, the cost of hosting the infrastructure was a concern for us. We eventually chose to use [DigitalOcean](https://www.digitalocean.com/) since the [GitHub Student Pack](https://education.github.com/pack) gives $200 in platform credits, which is more than enough to host the whole infrastructure.
+   Funnily enough, the infrastructure wasn't an issue. Rather, the cost of hosting the infrastructure was a concern for us. We eventually chose to use [DigitalOcean](https://www.digitalocean.com/) since the [GitHub Student Pack](https://education.github.com/pack) gives $200 in platform credits, which is more than enough to host the whole infrastructure.
 
 3. **Limited Staff**
 
-    We were short-staffed with the support tickets. Thankfully, there were few to no support tickets that were opened during the competition.
+   We were short-staffed with the support tickets. Thankfully, there were few to no support tickets that were opened during the competition.
 
 ## Challenges Created
 
@@ -95,22 +97,25 @@ image: https://opengraph.githubassets.com/ec17df9f5991f13a93c7b0cfff0e00027155c0
 ## List of Organized SparkCTF Competitions
 
 1. **SparkCTF**
-  - Lead Organizer
-  - Hosted on Dec 2024
-  - 36 hour timeframe to complete challenges
-  - For Year 1's to Year 3's
+
+- Lead Organizer
+- Hosted on Dec 2024
+- 36 hour timeframe to complete challenges
+- For Year 1's to Year 3's
 
 2. **SparkCTF: Experiential Track**
-  - Hosted on May 2025
-  - 111 hours timeframe to complete challenges
-  - For newly matriculated Year 1's only
+
+- Hosted on May 2025
+- 111 hours timeframe to complete challenges
+- For newly matriculated Year 1's only
 
 3. **SparkCTF 2.0**
-  - Lead Organizer
-  - Hosted on Dec 2025
-  - 36 hour timeframe to complete challenges
-  - For Year 1's to Year 3's
+
+- Lead Organizer
+- Hosted on Dec 2025
+- 36 hour timeframe to complete challenges
+- For Year 1's to Year 3's
 
 ## Infrastructure
 
-*Coming Soon :)*
+_Coming Soon :)_

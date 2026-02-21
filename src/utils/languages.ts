@@ -95,7 +95,7 @@ export const languages: Record<string, Language> = {
   },
   sql: {
     name: "SQL",
-    iconName: "sql"
+    iconName: "sql",
   },
   c: {
     name: "C",
@@ -109,4 +109,4 @@ export const languages: Record<string, Language> = {
 
 export const getLanguage = (lang: string): Language => {
   return languages[lang] || languages.html;
-}; 
+};

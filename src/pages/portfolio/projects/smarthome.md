@@ -1,13 +1,13 @@
 ---
-layout:  /src/layouts/ProjectLayout.astro
-title: 'Smartifying My Home'
+layout: /src/layouts/ProjectLayout.astro
+title: "Smartifying My Home"
 pubDate: 2025-10-20
-description: 'Using Home Assistant to make my home smarter!'
+description: "Using Home Assistant to make my home smarter!"
 languages: []
 image:
   url: "/images/projects/homeassistant.svg"
   alt: "Home Assistant"
---- 
+---
 
 I have felt that some dull and minor annoyances that I have to perform daily could be automated. There were also appliances that were labelled 'Smart Devices' while also relying on a constant internet connection to a cloud server that could shutdown at any time.
 

@@ -1,8 +1,8 @@
 ---
-layout:  /src/layouts/ProjectLayout.astro
-title: 'Bus Timings (iOS)'
+layout: /src/layouts/ProjectLayout.astro
+title: "Bus Timings (iOS)"
 pubDate: 2025-04-20
-description: 'Adding a Bus Widget straight on your lockscreen!'
+description: "Adding a Bus Widget straight on your lockscreen!"
 languages: []
 image:
   url: "/images/projects/bustiming.jpeg"

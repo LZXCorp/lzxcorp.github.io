@@ -605,7 +605,11 @@ a.inline-block.leading-5.pl-16 {
 .cert-item.mobile-active .group {
   border-color: var(--accent-real) !important;
   box-shadow: 0 0 30px -5px var(--accent-blur) !important;
-  background-color: color-mix(in srgb, var(--accent-real) 15%, transparent) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--accent-real) 15%,
+    transparent
+  ) !important;
 }
 
 /* Apply all hover animations to mobile-active */
@@ -660,7 +664,11 @@ a.inline-block.leading-5.pl-16 {
 .comp-item.mobile-active .group {
   border-color: var(--accent-real) !important;
   box-shadow: 0 0 40px -5px var(--accent-blur) !important;
-  background-color: color-mix(in srgb, var(--accent-real) 15%, transparent) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--accent-real) 15%,
+    transparent
+  ) !important;
 }
 
 /* Apply all hover animations to mobile-active */
